@@ -1,5 +1,5 @@
 package aka.hanan.hananakawiapp.data.Interface;
 
-public interface Rmoz {
-@Dao
+public interface Rmoz{
+
 }
