@@ -1,8 +1,15 @@
 package aka.hanan.hananakawiapp.data;
 
-import java.util.ArrayList;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+@Entity
 public class Message {
+    @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
+    public long keyid;
+    @ColumnInfo(name = "full_Name")
     public  String sentence;
     public ArrayList<String> ImageHand;
 

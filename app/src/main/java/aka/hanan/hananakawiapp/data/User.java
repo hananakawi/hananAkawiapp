@@ -1,6 +1,14 @@
 package aka.hanan.hananakawiapp.data;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
+    @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
+    public long keyid;
+    @ColumnInfo(name = "full_Name")
     public String name;
     public boolean Isdeaf;
     public  boolean Isdumb;

@@ -39,6 +39,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity android:name="aka.hanan.hananakawiapp.data.Interface.Rmoz" />
     </application>
 
 </manifest>

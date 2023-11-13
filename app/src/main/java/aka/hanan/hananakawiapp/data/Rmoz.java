@@ -1,6 +1,15 @@
 package aka.hanan.hananakawiapp.data;
 
-public class Rmoz {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class Rmoz  {
+    @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
+    public long keyid;
+    @ColumnInfo(name = "full_Name")
     public String text;
     public String letter;
     public String ImageHand;
