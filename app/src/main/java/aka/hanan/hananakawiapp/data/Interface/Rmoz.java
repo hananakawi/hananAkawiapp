@@ -7,19 +7,33 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.List;
+
+@Dao//لتحديد ان الواجهة تحتوي استعلامات على قاعدة بيانات
 public interface Rmoz  {
 
-    @Insert
-    default Void insertrmoz(Rmoz... t) {
-        return null;
+
+        @Query("SELECT * FROM Rmoz")
+        List<Rmoz> getAll();
+
+        @Query("SELECT * FROM Rmoz WHERE keyid IN (:userIds)")
+        List<Rmoz> loadAllByIds(int[] userIds);
+
+
+
+
+        @Insert
+        void insertAll(Rmoz...rmoz);
+
+        @Delete
+        void delete(Rmoz rmoz);
+
+        @Query("Delete From Rmoz WHERE keyid=:id ")
+        void delete(int id);
+
+        @Insert
+        void insert(Rmoz rmoz);
+        @Update
+        void update(Rmoz...rmoz);
+
     }
-
-    @Update
-    Void updatermoz(Rmoz... t);
-
-    @Delete
-    Void deletermoz(Rmoz... t);
-
-    @Query("Delete From Rmoz WHERE keyid=:id ")
-    void delete(int id);
-}
