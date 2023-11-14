@@ -2,7 +2,9 @@ package aka.hanan.hananakawiapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -49,4 +51,20 @@ public class SignIn extends AppCompatActivity {
 
         }
     }
-}
+    public void onClickSignUP (View v)
+    {
+
+        //to open new activity from current to next activity
+        Intent i= new Intent(SignIn.this,  SignUp.class);
+        startActivity(i);
+    }
+
+    public void onClickSignin (View v)
+    {
+        checkEmailPass();
+
+    }
+
+    }
+
+
