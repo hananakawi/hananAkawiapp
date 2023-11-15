@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
+import aka.hanan.hananakawiapp.data.AppDataBase;
+import aka.hanan.hananakawiapp.data.Interface.User;
+import aka.hanan.hananakawiapp.data.MainActivity;
+
 public class SignIn extends AppCompatActivity {
     private TextInputEditText etEmail;
     private TextInputEditText etpassword;
@@ -48,7 +52,21 @@ public class SignIn extends AppCompatActivity {
         if (isAllOk)
         {
             Toast.makeText(this,"All ok",Toast.LENGTH_SHORT).show();
+         // بناء قاعدة بيانات وارجاع مؤشر عليها
+            AppDataBase db=AppDataBase.getDB(getApplicationContext());
+            //مؤشر لكائن عمليات الجدول
+            User user=db.getUser();
+            User MyUser = user.checkEmailPassw(email, pass);
+            if (MyUser==null){
+                Toast.makeText(this, "wrong email or password", Toast.LENGTH_LONG).show();
 
+            }
+            else
+            {
+                Intent i=new Intent(SignIn.this, MainActivity.class);
+                startActivity(i);
+                finish();
+            }
         }
     }
     public void onClickSignUP (View v)
@@ -64,7 +82,13 @@ public class SignIn extends AppCompatActivity {
         checkEmailPass();
 
     }
-
+    public void onClickCancel(View v) {
+        Intent i = new Intent(SignIn.this, SplashScreen.class);
+        startActivity(i);
+        finish();
     }
+
+
+}
 
 
