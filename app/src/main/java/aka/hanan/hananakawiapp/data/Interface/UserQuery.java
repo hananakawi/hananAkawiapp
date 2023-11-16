@@ -9,29 +9,29 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao//لتحديد ان الواجهة تحتوي استعلامات على قاعدة بيانات
-public interface User {
+public interface UserQuery {
 
         @Query("SELECT * FROM user")
-        List<User> getAll();
+        List<UserQuery> getAll();
 
         @Query("SELECT * FROM User WHERE keyid IN (:userIds)")
-        List<User> loadAllByIds(int[] userIds);
+        List<UserQuery> loadAllByIds(int[] userIds);
 
 
-       User checkEmailPassw(String myEmail, String myPassw);
+       UserQuery checkEmailPassw(String myEmail, String myPassw);
 
         @Insert
-        void insertAll(User... users);
+        void insertAll(UserQuery... users);
 
         @Delete
-        void delete(User user);
+        void delete(UserQuery user);
 
         @Query("Delete From user WHERE keyid=:id ")
         void delete(int id);
 
         @Insert
-        void insert(User myUser);
+        void insert(UserQuery myUser);
         @Update
-        void update(User...values);
+        void update(UserQuery...values);
 
     }

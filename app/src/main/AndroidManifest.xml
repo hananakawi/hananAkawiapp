@@ -39,7 +39,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".data.Interface.Rmoz" />
+        <activity android:name=".data.Interface.RmozQuery" />
     </application>
 
 </manifest>

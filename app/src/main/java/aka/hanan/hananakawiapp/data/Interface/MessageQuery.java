@@ -10,29 +10,29 @@ import java.util.List;
 
 @Dao//لتحديد ان الواجهة تحتوي استعلامات على قاعدة بيانات
 
-public interface Message {
+public interface MessageQuery {
 
 
         @Query("SELECT * FROM message")
-    List<Message> getAll();
+    List<MessageQuery> getAll();
 
         @Query("SELECT * FROM message WHERE keyid IN (:userIds)")
-        List<Message> loadAllByIds(int[] userIds);
+        List<MessageQuery> loadAllByIds(int[] userIds);
 
 
 
         @Insert
-        void insertAll(Message... messages);
+        void insertAll(MessageQuery... messages);
 
         @Delete
-        void delete(Message message);
+        void delete(MessageQuery message);
 
         @Query("Delete From Message WHERE keyid=:id ")
         void delete(int id);
 
         @Insert
-        void insert(Message message);
+        void insert(MessageQuery message);
         @Update
-        void update(Message...values);
+        void update(MessageQuery...values);
 
 }

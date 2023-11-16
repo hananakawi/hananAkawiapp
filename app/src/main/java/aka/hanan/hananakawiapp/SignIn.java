@@ -11,7 +11,7 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 
 import aka.hanan.hananakawiapp.data.AppDataBase;
-import aka.hanan.hananakawiapp.data.Interface.User;
+import aka.hanan.hananakawiapp.data.Interface.UserQuery;
 import aka.hanan.hananakawiapp.data.MainActivity;
 
 public class SignIn extends AppCompatActivity {
@@ -55,8 +55,8 @@ public class SignIn extends AppCompatActivity {
          // بناء قاعدة بيانات وارجاع مؤشر عليها
             AppDataBase db=AppDataBase.getDB(getApplicationContext());
             //مؤشر لكائن عمليات الجدول
-            User user=db.getUser();
-            User MyUser = user.checkEmailPassw(email, pass);
+            UserQuery userQuery = db.getUserQuery();
+            UserQuery MyUser = userQuery.checkEmailPassw(email, pass);
             if (MyUser==null){
                 Toast.makeText(this, "wrong email or password", Toast.LENGTH_LONG).show();
 

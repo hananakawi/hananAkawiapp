@@ -12,6 +12,8 @@ public class User {
     public String name;
     public boolean Isdeaf;
     public  boolean Isdumb;
+    public String email;
+    public String pass;
 
     public String getName() {
         return name;
