@@ -11,23 +11,30 @@ public class Message {
     public long keyid;
     @ColumnInfo(name = "full_Name")
     public  String sentence;
-    public ArrayList<String> ImageHand;
+    public String ImageHand;
 
     public String getSentence() {
         return sentence;
     }
 
-    public ArrayList<String> getImageHand() {
+    public String getImageHand() {
         return ImageHand;
     }
 
-    public void setImageHand(ArrayList<String> imageHand) {
-        ImageHand = imageHand;
+    public long getKeyid() {
+        return keyid;
     }
 
     public void setSentence(String sentence) {
         this.sentence = sentence;
+    }
 
+    public void setImageHand(String imageHand) {
+        ImageHand = imageHand;
+    }
+
+    public void setKeyid(long keyid) {
+        this.keyid = keyid;
     }
 
     @Override

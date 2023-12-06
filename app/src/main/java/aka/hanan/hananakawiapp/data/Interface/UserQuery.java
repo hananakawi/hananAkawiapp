@@ -8,30 +8,32 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import aka.hanan.hananakawiapp.data.User;
+
 @Dao//لتحديد ان الواجهة تحتوي استعلامات على قاعدة بيانات
 public interface UserQuery {
 
-        @Query("SELECT * FROM user")
-        List<UserQuery> getAll();
+        @Query("SELECT * FROM User")
+        List<User> getAll();
 
         @Query("SELECT * FROM User WHERE keyid IN (:userIds)")
-        List<UserQuery> loadAllByIds(int[] userIds);
+        List<User> loadAllByIds(int[] userIds);
 
-
-       UserQuery checkEmailPassw(String myEmail, String myPassw);
+    @Query("SELECT * FROM User Where email = :myEmail")
+    User checkEmailPassw(String myEmail, String myPassw);
 
         @Insert
-        void insertAll(UserQuery... users);
+        void insertAll(User... users);
 
         @Delete
-        void delete(UserQuery user);
+        void delete(User user);
 
         @Query("Delete From user WHERE keyid=:id ")
         void delete(int id);
 
         @Insert
-        void insert(UserQuery myUser);
+        void insert(User myUser);
         @Update
-        void update(UserQuery...values);
+        void update(User...values);
 
     }
