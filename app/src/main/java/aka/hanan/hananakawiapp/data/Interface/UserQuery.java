@@ -22,6 +22,7 @@ public interface UserQuery {
     @Query("SELECT * FROM User Where email = :myEmail")
     User checkEmailPassw(String myEmail, String myPassw);
 
+
         @Insert
         void insertAll(User... users);
 

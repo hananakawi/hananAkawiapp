@@ -88,7 +88,7 @@ public class SignUp extends AppCompatActivity {
             AppDataBase db = AppDataBase.getDB(getApplicationContext());
             UserQuery userQurey = db.getUserQuery();
 
-            if (userQurey.checkEmailPassw(email) != null) {
+            if (userQurey.checkEmail(email) != null) {
                 etE_mail.setError("found email");
             } else {
                 User MyUser = new User();
