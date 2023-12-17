@@ -35,7 +35,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void onClickCancel(View v) {
-        Intent i = new Intent(SignUp.this, SplashScreen.class);
+        Intent i = new Intent(SignUp.this, SignIn.class);
         startActivity(i);
         finish();
     }
