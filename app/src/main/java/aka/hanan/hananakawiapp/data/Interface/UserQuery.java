@@ -8,7 +8,7 @@ import androidx.room.Update;
 
 import java.util.List;
 
-import aka.hanan.hananakawiapp.data.User;
+import aka.hanan.hananakawiapp.data.Tables.User;
 
 @Dao//لتحديد ان الواجهة تحتوي استعلامات على قاعدة بيانات
 public interface UserQuery {
@@ -19,8 +19,7 @@ public interface UserQuery {
         @Query("SELECT * FROM User WHERE keyid IN (:userIds)")
         List<User> loadAllByIds(int[] userIds);
 
-    @Query("SELECT * FROM User Where email = :myEmail")
-    User checkEmailPassw(String myEmail, String myPassw);
+
 
     @Query("SELECT * FROM User Where email = :myEmail")
     User checkEmail(String myEmail);

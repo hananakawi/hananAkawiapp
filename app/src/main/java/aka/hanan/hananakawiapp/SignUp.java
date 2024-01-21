@@ -12,7 +12,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import aka.hanan.hananakawiapp.data.AppDataBase;
 import aka.hanan.hananakawiapp.data.Interface.UserQuery;
-import aka.hanan.hananakawiapp.data.User;
+import aka.hanan.hananakawiapp.data.Tables.User;
 
 public class SignUp extends AppCompatActivity {
     private Button btnCancel;

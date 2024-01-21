@@ -12,6 +12,9 @@ import androidx.room.RoomDatabase;
 import aka.hanan.hananakawiapp.data.Interface.MessageQuery;
 import aka.hanan.hananakawiapp.data.Interface.RmozQuery;
 import aka.hanan.hananakawiapp.data.Interface.UserQuery;
+import aka.hanan.hananakawiapp.data.Tables.Message;
+import aka.hanan.hananakawiapp.data.Tables.Rmoz;
+import aka.hanan.hananakawiapp.data.Tables.User;
 
 @Database(entities = {User.class, Rmoz.class, Message.class},version = 5)
 public abstract class AppDataBase extends RoomDatabase {

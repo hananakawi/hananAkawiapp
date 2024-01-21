@@ -1,4 +1,4 @@
-package aka.hanan.hananakawiapp.data;
+package aka.hanan.hananakawiapp.data.Tables;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.ColumnInfo;
