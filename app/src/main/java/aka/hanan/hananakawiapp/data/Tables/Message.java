@@ -5,13 +5,17 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+
+/**
+ * فئة الرسائل  تحوي صفتين
+ */
 @Entity
 public class Message {
     @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
     public long keyid;
     @ColumnInfo(name = "full_Name")
-    public  String sentence;
-    public String ImageHand;
+    public  String sentence;//
+    public String ImageHand;//
 
     public String getSentence() {
         return sentence;

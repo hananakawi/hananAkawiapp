@@ -14,7 +14,7 @@ public interface MessageQuery {
 
 
         @Query("SELECT * FROM message")
-    List<MessageQuery> getAll();
+    List<MessageQuery> getAll();//اعادة جميع الرسائل
 
         @Query("SELECT * FROM message WHERE keyid IN (:userIds)")
         List<MessageQuery> loadAllByIds(int[] userIds);
