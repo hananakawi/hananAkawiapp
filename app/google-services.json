@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "181728838577",
+    "project_id": "hananakawiapp",
+    "storage_bucket": "hananakawiapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181728838577:android:bbdfaab2d5a3ebb1fe3390",
+        "android_client_info": {
+          "package_name": "aka.hanan.hananakawiapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKMJa4GaI3ZDEKLivPr9Mo0H8S0nHGKuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

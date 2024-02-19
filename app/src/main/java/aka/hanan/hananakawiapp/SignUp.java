@@ -1,5 +1,6 @@
 package aka.hanan.hananakawiapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,10 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import aka.hanan.hananakawiapp.data.AppDataBase;
-import aka.hanan.hananakawiapp.data.Interface.UserQuery;
+//import aka.hanan.hananakawiapp.data.AppDataBase;
+//import aka.hanan.hananakawiapp.data.Interface.UserQuery;
 import aka.hanan.hananakawiapp.data.Tables.User;
 
 public class SignUp extends AppCompatActivity {
@@ -28,20 +33,20 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
     }
 
-    public void onClickSigUp(View v) {
-        checkData();
+    public void onClickSavefirebase(View v) {
+        checkDataFB();
 
 
     }
 
-    public void onClickCancel(View v) {
+    public void onClickCancelfirebase(View v) {
         Intent i = new Intent(SignUp.this, SignIn.class);
-        startActivity(i);
+
         finish();
     }
 
 
-    private void checkData() {
+    private void checkDataFB() {
         boolean isAllOk = true; // يحوي نتيجة فحص الحقول ان كانت سليمة
 
         // استخراج النص من حقل الايميل
@@ -85,23 +90,32 @@ public class SignUp extends AppCompatActivity {
             Toast.makeText(this, "All ok", Toast.LENGTH_SHORT).show();
         }
         if (isAllOk) {
-            AppDataBase db = AppDataBase.getDB(getApplicationContext());
-            UserQuery userQurey = db.getUserQuery();
+            Toast.makeText(this, "All ok", Toast.LENGTH_SHORT).show();
+            FirebaseAuth auth = FirebaseAuth.getInstance();//بناء كائن لعملية التسجيل
+            // بناء حساب بمساعدة الميل وكلمة السر
+            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override//الاستجابة الواردة من محاولة التسجيل في السحابة
+                public void onComplete(@NonNull Task<AuthResult> task) //البارمتر يحتوي على معلومات من الخادم حول نتيجة طلب التسجيل
+                {
+                    if (task.isSuccessful())//هل العملية ناجحة
+                    {
+                        Toast.makeText(SignUp.this, "Signingup succeeded", Toast.LENGTH_SHORT).show();
+                        finish();
+                    } else {
+                        Toast.makeText(SignUp.this, "Signingup failed", Toast.LENGTH_SHORT).show();
+                        etE_mail.setError(task.getException().getMessage());//ظهور رسالة الخاطئة من السحابة
 
-            if (userQurey.checkEmail(email) != null) {
-                etE_mail.setError("found email");
-            } else {
-                User MyUser = new User();
-                MyUser.email = email;
-                MyUser.name = name;
-                MyUser.pass = pass;
-                userQurey.insert( MyUser);
-                finish();
-
-            }
+                    }
+                }
+            });
         }
+
+
+
     }
-}
+        }
+
+
 
 
 

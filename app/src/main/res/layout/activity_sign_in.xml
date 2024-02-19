@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:onClick="onClickSigninFIREBASE"
     tools:context=".SignIn">
 
     <LinearLayout
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:onClick="onClickSignin"
+            android:onClick="onClickSigninFIREBASE"
             android:text="Sign In" />
 
         <Button
