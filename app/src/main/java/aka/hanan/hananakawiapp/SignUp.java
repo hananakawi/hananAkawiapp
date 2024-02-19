@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,10 +15,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 //import aka.hanan.hananakawiapp.data.AppDataBase;
 //import aka.hanan.hananakawiapp.data.Interface.UserQuery;
-import aka.hanan.hananakawiapp.data.Tables.User;
+import aka.hanan.hananakawiapp.data.Tables.MyUser;
 
 public class SignUp extends AppCompatActivity {
     private Button btnCancel;
@@ -109,6 +112,41 @@ public class SignUp extends AppCompatActivity {
                 }
             });
         }
+
+
+
+    }
+    private void saveUser_FB(String isIsdumb, String name,  String isIsdeaf,String email,String pass)
+    {
+        //مؤشر لقاعدة البيانات
+        FirebaseFirestore db= FirebaseFirestore.getInstance();
+
+        //استخراج الرقم المميز للمستعمل الذي سجل الدخول
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        //بناء الكائن الذي سيتم حفظه
+        MyUser user=new MyUser();
+        user.setIsdeaf(user.Isdeaf);
+        user.setName(name);
+        user.setIsdumb(user.Isdumb);
+        user.setEmail(email);
+        user.setPass(pass);
+
+        //اضافة كائن لمجموعة المستعملين ومعالج حدث لفحص نجاح الاضافة
+        db.collection("MyUsers").add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful())
+                {
+                    Toast.makeText(SignUp.this,"Succeed to add User",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(SignUp.this,"Failed to add user",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
 

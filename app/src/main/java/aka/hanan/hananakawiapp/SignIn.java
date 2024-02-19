@@ -17,9 +17,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 //import aka.hanan.hananakawiapp.data.MainActivity;
 import aka.hanan.hananakawiapp.data.Tables.SplashScreen;
-import aka.hanan.hananakawiapp.data.Tables.User;
 
-  public class SignIn extends AppCompatActivity {
+public class SignIn extends AppCompatActivity {
     private TextInputEditText etEmail;
     private TextInputEditText etpassword;
     private Button btnSignIn;
