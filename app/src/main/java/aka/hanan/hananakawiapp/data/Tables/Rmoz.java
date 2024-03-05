@@ -10,9 +10,9 @@ public class Rmoz  {
     @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
     public long keyid;
     @ColumnInfo(name = "full_Name")
-    public String text;
-    public String letter;
-    public String ImageHand;
+    public String text;//نص من كتابة عادي ل لغة الاشارة
+    public String letter;//حرف نحوله من حرف الى لغة اشارة
+    public String ImageHand;//صورة اليد الخاصة بالحرف او بالنص
 
     public String getText() {
         return text;

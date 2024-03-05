@@ -9,11 +9,11 @@ public class MyUser {
     @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
     public long keyid;
     @ColumnInfo(name = "full_Name")
-    public String name;
-    public boolean Isdeaf;
-    public  boolean Isdumb;
-    public String email;
-    public String pass;
+    public String name;//اسم الشخص
+    public boolean Isdeaf;//هل الشخص اخرس
+    public  boolean Isdumb;//هل هو اطرش
+    public String email;//البريد الالكتروني الشخصي للشخص
+    public String pass;//كلمة السر
 
     public String getName() {
         return name;

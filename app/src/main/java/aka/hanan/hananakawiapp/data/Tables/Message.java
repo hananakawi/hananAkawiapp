@@ -10,14 +10,16 @@ import java.util.ArrayList;
  * فئة الرسائل  تحوي صفتين
  */
 @Entity
-public class Message {
+public class Message
+{
     @PrimaryKey(autoGenerate = true)//تحديد الصفة كمفتاح رئيسي والذي ينتج بسكل تلقائي
-    public long keyid;
+    public long keyid;//
     @ColumnInfo(name = "full_Name")
-    public  String sentence;//
-    public String ImageHand;//
+    public  String sentence;//الجملة التي سترجم من لغة الاشارة لاحرف عادية
+    public String ImageHand;// صفة تمثل صورة اليد حسب الرمز الخاص لكل حرف/ جملة
 
-    public String getSentence() {
+    public String getSentence()
+    {
         return sentence;
     }
 
