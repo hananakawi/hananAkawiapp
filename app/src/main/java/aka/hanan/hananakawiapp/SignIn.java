@@ -16,7 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 //import aka.hanan.hananakawiapp.data.MainActivity;
-import aka.hanan.hananakawiapp.data.Tables.SplashScreen;
+
 
 public class SignIn extends AppCompatActivity {
     private TextInputEditText etEmail;
@@ -77,11 +77,8 @@ public class SignIn extends AppCompatActivity {
         }
           }
 
-      {
-              Intent i=new Intent(SignIn.this, MainActivity.class);
-               startActivity(i);
-               finish();
-          }
+
+
 
 
     public void onClickSignUP (View v)
