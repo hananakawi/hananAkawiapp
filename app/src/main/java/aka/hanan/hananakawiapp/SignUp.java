@@ -102,6 +102,7 @@ public class SignUp extends AppCompatActivity {
                 {
                     if (task.isSuccessful())//هل العملية ناجحة
                     {
+                        saveUser_FB(email,pass,name);
                         Toast.makeText(SignUp.this, "Signingup succeeded", Toast.LENGTH_SHORT).show();
                         finish();
                     } else {
@@ -116,7 +117,7 @@ public class SignUp extends AppCompatActivity {
 
 
     }
-    private void saveUser_FB(String isIsdumb, String name,  String isIsdeaf,String email,String pass)
+    private void saveUser_FB( String name ,String email,String pass)
     {
         //مؤشر لقاعدة البيانات
         FirebaseFirestore db= FirebaseFirestore.getInstance();
@@ -126,9 +127,7 @@ public class SignUp extends AppCompatActivity {
 
         //بناء الكائن الذي سيتم حفظه
         MyUser user=new MyUser();
-        user.setIsdeaf(user.Isdeaf);
         user.setName(name);
-        user.setIsdumb(user.Isdumb);
         user.setEmail(email);
         user.setPass(pass);
 
