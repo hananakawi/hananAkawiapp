@@ -14,6 +14,24 @@ public class MyUser {
     public  boolean Isdumb;//هل هو اطرش
     public String email;//البريد الالكتروني الشخصي للشخص
     public String pass;//كلمة السر
+    String image;
+    String phone;
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getName() {
         return name;
