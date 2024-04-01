@@ -27,6 +27,8 @@ public class SignIn extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        etEmail=findViewById(R.id.etEmail);
+        etpassword=findViewById(R.id.etpassword);
     }
     private void checkEmailPassFb()
     {

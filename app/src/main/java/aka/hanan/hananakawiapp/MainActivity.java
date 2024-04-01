@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //معالجة حدث للموافقة
                 Toast.makeText(MainActivity.this, "Signing out", Toast.LENGTH_SHORT).show();
-                finish();
+                FirebaseAuth.getInstance().signOut();
             }
         });
 

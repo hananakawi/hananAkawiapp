@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,11 +32,39 @@ public class SignUp extends AppCompatActivity {
     private TextInputEditText etrepassword;
     private TextInputEditText etname;
 
+
+    //upload: 1 add Xml image view or button and upload button
+//upload: 2 add next fileds
+    private final int IMAGE_PICK_CODE=100;// קוד מזהה לבקשת בחירת תמונה
+    private final int PERMISSION_CODE=101;//קוד מזהה לבחירת הרשאת גישה לקבצים
+    private ImageButton imgBtnl;//כפתור/ לחצן לבחירת תמונה והצגתה
+    private Button btnUpload;// לחצן לביצוע העלאת התמונה
+    private Uri toUploadimageUri;// כתוב הקובץ(תמונה) שרוצים להעלות
+    private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        etE_mail= findViewById(R.id.etEmail);
+        etpassword=findViewById(R.id.etpassword);
+       etrepassword= findViewById(R.id.etrepassword);
+        etname= findViewById(R.id.etname);
+        btnSave=findViewById(R.id.btnSave);
+        btnCancel=findViewById(R.id.btnCancel);
+
+        //upload: 3
+        imgBtnl=findViewById(R.id.imgButton);
+        imgBtnl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+            }
+        });
+
     }
+
 
     public void onClickSavefirebase(View v) {
         checkDataFB();
@@ -117,6 +147,64 @@ public class SignUp extends AppCompatActivity {
 
 
     }
+    //FireBase
+    private void checkAndSignUP_FB() {
+        boolean isAllok = true; // يحوي نتيجة فحص الحقول ان كانت  السليمة
+        String email = etE_mail.getText().toString();
+
+        //استخراج النص كلمة المرور
+        String password = etpassword.getText().toString();
+        //استخراج نص الذي يحوي على الاسم
+        String name = etname.getText().toString();
+        // استخراج النص الذي يحوي على كلمة المرور الجديدة
+        String rePaswword = etrepassword.getText().toString();
+        //فحص الايميل ان كان طوله اقل من 6 او لا يحوي على @ فهو خطأ
+        if (email.length() < 6 || email.contains("@") == false) {
+            // تعديل المتغير و يدل على انه فحص و يعطي نتيجة خاطئة
+            isAllok = false;
+            //عرض النتيجة خطأ في حقل الايميل
+            etE_mail.setError("worng email");
+        }
+        //فحص كلمة المرور اذا كانت اقل من 8 او تحتوي على فراغ
+        if (password.length() < 8 || password.contains(" ") == true) {
+            //تعديل المتغير على ان يعطي نتيجة خاطئة
+            isAllok = false;
+            //عرض نتيجة خطأ في حقل كلمة المرور
+            etpassword.setError("worng password");
+        }
+        //فحص الاسم يجب ان لا يحتوي على اقل من 3 حروف
+        if (name.length() < 3) {
+            //تعديل المتغير على ان يعطي نتيجة خاطئة
+            isAllok = false;
+            //عرض نتيجة اسم خاطئ في حقل الاسم
+           etname.setError("worng name");
+        }
+        //فحص اذا كانت كلمة المرور الجديدة نفس الكلمة القديمة(لتأكيد كبمة المرور)
+        if (rePaswword.equals(password) == false) {
+            //تعديل المتغير على ان يعطي نتيجة خاطئة
+            isAllok = false;
+            //عرض نتيجة خطأ في الحقل
+            etrepassword.setError("worng password");
+        }
+        if (isAllok) {
+            //كائن لعملية تسجيل
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            //יצירת חשבון בעזרת מיל ו סיסמא
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override //התגובה שמתקבל הנסיון הרשיום בען
+                public void onComplete(@NonNull Task<AuthResult> task) // הפרמטר מכיל מידע מהשרת על תוצאת הבקשה לרישום
+                {
+                    if (task.isSuccessful()) {//
+                        saveUser_FB(email,name,password);
+                        Toast.makeText(SignUp.this, "Signing up Succeeded", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(SignUp.this, "Signing up Failed", Toast.LENGTH_SHORT).show();
+                       etE_mail.setError(task.getException().getMessage());//
+                    }
+                }
+            });
+        }
+    }
     private void saveUser_FB( String name ,String email,String pass)
     {
         //مؤشر لقاعدة البيانات
@@ -150,7 +238,29 @@ public class SignUp extends AppCompatActivity {
 
 
     }
-        }
+
+    /**
+     * نقل الى شاشة اخرى
+     * @param v
+     */
+    public void onClicksaveSignUp(View v) {
+        checkAndSignUP_FB();
+    }
+
+
+
+    public void onClickCancelFireBase(View v)
+    {
+        finish();
+    }
+    private void pickImageFromGallery(){
+        //implicit intent (מרומז) to pick image
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent,IMAGE_PICK_CODE);//הפעלתה האינטנט עם קוד הבקשה
+    }
+
+}
 
 
 
