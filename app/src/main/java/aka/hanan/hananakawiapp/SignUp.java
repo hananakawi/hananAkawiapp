@@ -89,6 +89,9 @@ public class SignUp extends AppCompatActivity {
         finish();
     }
 
+    /**
+     *
+     */
 
     private void checkDataFB() {
         boolean isAllOk = true; // يحوي نتيجة فحص الحقول ان كانت سليمة
@@ -197,10 +200,10 @@ public class SignUp extends AppCompatActivity {
             //عرض نتيجة خطأ في الحقل
             etrepassword.setError("worng password");
         }
-        if(toUploadimageUri==null) {
-            isAllok = false;
-            Toast.makeText(this, "Add Image First", Toast.LENGTH_SHORT).show();
-        }
+//        if(toUploadimageUri==null) {
+//            isAllok = false;
+//            Toast.makeText(this, "Add Image First", Toast.LENGTH_SHORT).show();
+//        }
         if (isAllok) {
             //كائن لعملية تسجيل
             FirebaseAuth auth = FirebaseAuth.getInstance();
