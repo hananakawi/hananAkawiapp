@@ -155,6 +155,7 @@ public class SignUp extends AppCompatActivity {
                     } else {
                         Toast.makeText(SignUp.this, "Signing up Failed", Toast.LENGTH_SHORT).show();
                         etE_mail.setError(task.getException().getMessage());//
+
                     }
                 }
             });
