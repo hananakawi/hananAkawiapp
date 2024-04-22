@@ -44,33 +44,39 @@ public class SignUp extends AppCompatActivity {
 
     //upload: 1 add Xml image view or button and upload button
 //upload: 2 add next fileds
-    private final int IMAGE_PICK_CODE=100;// קוד מזהה לבקשת בחירת תמונה
-    private final int PERMISSION_CODE=101;//קוד מזהה לבחירת הרשאת גישה לקבצים
+    private final int IMAGE_PICK_CODE = 100;// קוד מזהה לבקשת בחירת תמונה
+    private final int PERMISSION_CODE = 101;//קוד מזהה לבחירת הרשאת גישה לקבצים
     private ImageButton imgBtnl;//כפתור/ לחצן לבחירת תמונה והצגתה
     private Button btnUpload;// לחצן לביצוע העלאת התמונה
     private Uri toUploadimageUri;// כתוב הקובץ(תמונה) שרוצים להעלות
     private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
-    MyUser user=new MyUser();
+    MyUser user = new MyUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        etE_mail= findViewById(R.id.etEmail);
-        etpassword=findViewById(R.id.etpassword);
-       etrepassword= findViewById(R.id.etrepassword);
-        etname= findViewById(R.id.etname);
-        btnSave=findViewById(R.id.btnSave);
-        btnCancel=findViewById(R.id.btnCancel);
+        etE_mail = findViewById(R.id.etEmail);
+        etpassword = findViewById(R.id.etpassword);
+        etrepassword = findViewById(R.id.etrepassword);
+        etname = findViewById(R.id.etname);
+        btnSave = findViewById(R.id.btnSave);
+        btnCancel = findViewById(R.id.btnCancel);
 
         //upload: 3
-        imgBtnl=findViewById(R.id.imgButton);
+        imgBtnl = findViewById(R.id.imgButton);
         imgBtnl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-          //upload: 8
+                //upload: 8
                 checkPermission();
 
+            }
+        });
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkAndSignUP_FB();
             }
         });
 
@@ -78,7 +84,7 @@ public class SignUp extends AppCompatActivity {
 
 
     public void onClickSavefirebase(View v) {
-        checkDataFB();
+
 
 
     }
@@ -89,78 +95,7 @@ public class SignUp extends AppCompatActivity {
         finish();
     }
 
-    /**
-     *
-     */
 
-    private void checkDataFB() {
-        boolean isAllOk = true; // يحوي نتيجة فحص الحقول ان كانت سليمة
-
-        // استخراج النص من حقل الايميل
-        String email = etE_mail.getText().toString();
-
-        // استخراج نص كلمة المرور
-        String pass = etpassword.getText().toString();
-
-        // استخراج تكرار كلمة المرور
-        String repass = etrepassword.getText().toString();
-
-        // استخراج الاسم
-        String name = etname.getText().toString();
-
-        // فحص الايميل ان كان طوله أقل من 6 أو لا يحتوي على @ فهو خاطئ
-        if (email.length() < 6 || email.contains("@") == false) {
-            // تعديل المتغير ليدل على أن الفحص يعطي نتيجة خاطئة
-            isAllOk = false;
-            // عرض ملاحظة خطأ على الشاشة داخل حقل البريد
-            etE_mail.setError("wrong email");
-        }
-
-        // يجب أن تكون كلمة المرر من ثمانية ولا تحوي فراغ اذا كان بها هذه الأشياء فانه يرجع نص بأن كلمة المرور خاطئة
-        if (pass.length() < 8 || pass.contains(" ") == true) {
-            isAllOk = false;
-            etpassword.setError("Wrong password");
-        }
-
-        //يجب أن يكون تكرار كلمة المرور نفس كلمة المرور
-        if (repass.equals(pass) == false) {
-            isAllOk = false;
-            etrepassword.setError("not the same");
-        }
-
-        //يجب أن يكون الاسم اجباري ولو حر واحد لو ترك الاسم بدون أن يكتبه فانه يرجع نص بانه فارغ
-        if (name.length() < 1) {
-            isAllOk = false;
-            etname.setError("name is empty");
-        }
-        if (isAllOk) {
-            Toast.makeText(this, "All ok", Toast.LENGTH_SHORT).show();
-        }
-        if (isAllOk) {
-            Toast.makeText(this, "All ok", Toast.LENGTH_SHORT).show();
-            FirebaseAuth auth = FirebaseAuth.getInstance();//بناء كائن لعملية التسجيل
-            // بناء حساب بمساعدة الميل وكلمة السر
-            auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override//الاستجابة الواردة من محاولة التسجيل في السحابة
-                public void onComplete(@NonNull Task<AuthResult> task) //البارمتر يحتوي على معلومات من الخادم حول نتيجة طلب التسجيل
-                {
-                    if (task.isSuccessful())//هل العملية ناجحة
-                    {
-                        saveUser_FB(user);
-                        Toast.makeText(SignUp.this, "Signingup succeeded", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(SignUp.this, "Signingup failed", Toast.LENGTH_SHORT).show();
-                        etE_mail.setError(task.getException().getMessage());//ظهور رسالة الخاطئة من السحابة
-
-                    }
-                }
-            });
-        }
-
-
-
-    }
     //FireBase
     private void checkAndSignUP_FB() {
         boolean isAllok = true; // يحوي نتيجة فحص الحقول ان كانت  السليمة
@@ -191,7 +126,7 @@ public class SignUp extends AppCompatActivity {
             //تعديل المتغير على ان يعطي نتيجة خاطئة
             isAllok = false;
             //عرض نتيجة اسم خاطئ في حقل الاسم
-           etname.setError("worng name");
+            etname.setError("worng name");
         }
         //فحص اذا كانت كلمة المرور الجديدة نفس الكلمة القديمة(لتأكيد كبمة المرور)
         if (rePaswword.equals(password) == false) {
@@ -214,49 +149,44 @@ public class SignUp extends AppCompatActivity {
                 {
                     if (task.isSuccessful()) {//
                         user.setEmail(email);
-                      //todo set phone
-                      uploadImage(toUploadimageUri);
+                        //todo set phone
+                        uploadImage(toUploadimageUri);
                         Toast.makeText(SignUp.this, "Signing up Succeeded", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(SignUp.this, "Signing up Failed", Toast.LENGTH_SHORT).show();
-                       etE_mail.setError(task.getException().getMessage());//
+                        etE_mail.setError(task.getException().getMessage());//
                     }
                 }
             });
         }
     }
-    private void saveUser_FB( MyUser user)
-    {
+
+    private void saveUser_FB(MyUser user) {
         //مؤشر لقاعدة البيانات
-        FirebaseFirestore db= FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         //استخراج الرقم المميز للمستعمل الذي سجل الدخول
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
 
         //اضافة كائن لمجموعة المستعملين ومعالج حدث لفحص نجاح الاضافة
         db.collection("MyUsers").add(user).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
-                if (task.isSuccessful())
-                {
-                    Toast.makeText(SignUp.this,"Succeed to add User",Toast.LENGTH_SHORT).show();
+                if (task.isSuccessful()) {
+                    Toast.makeText(SignUp.this, "Succeed to add User", Toast.LENGTH_SHORT).show();
                     finish();
-                }
-                else
-                {
-                    Toast.makeText(SignUp.this,"Failed to add user",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SignUp.this, "Failed to add user", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-
-
-
     }
+
 
     /**
      * نقل الى شاشة اخرى
+     *
      * @param v
      */
     public void onClicksaveSignUp(View v) {
@@ -264,42 +194,41 @@ public class SignUp extends AppCompatActivity {
     }
 
 
-
-    public void onClickCancelFireBase(View v)
-    {
+    public void onClickCancelFireBase(View v) {
         finish();
     }
-    private void pickImageFromGallery(){
+
+    private void pickImageFromGallery() {
         //implicit intent (מרומז) to pick image
-        Intent intent=new Intent(Intent.ACTION_PICK);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(intent,IMAGE_PICK_CODE);//הפעלתה האינטנט עם קוד הבקשה
+        startActivityForResult(intent, IMAGE_PICK_CODE);//הפעלתה האינטנט עם קוד הבקשה
     }
 
 
     //upload: 5:handle result of picked images
+
     /**
-     *
      * @param requestCode מספר הקשה
-     * @param resultCode תוצאה הבקשה (אם נבחר משהו או בוטלה)
-     * @param data הנתונים שנבחרו
+     * @param resultCode  תוצאה הבקשה (אם נבחר משהו או בוטלה)
+     * @param data        הנתונים שנבחרו
      */
     @Override
-    protected void onActivityResult(int requestCode,int resultCode,Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         //אם נבחר משהו ואם זה קוד בקשת התמונה
-        if (resultCode==RESULT_OK && requestCode== IMAGE_PICK_CODE){
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //a עידכון תכונת כתובת התמונה
             toUploadimageUri = data.getData();//קבלת כתובת התמונה הנתונים שניבחרו
             imgBtnl.setImageURI(toUploadimageUri);// הצגת התמונה שנבחרה על רכיב התמונה
         }
     }
     //upload: 6
+
     /**
      * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
      */
-    private void checkPermission()
-    {
+    private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//בדיקת גרסאות
             //בדיקה אם ההשאה לא אושרה בעבר
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -312,22 +241,22 @@ public class SignUp extends AppCompatActivity {
                 //permission already granted אם יש הרשאה מקודם אז מפעילים בחירת תמונה מהטלפון
                 pickImageFromGallery();
             }
-        }
-        else {//אם גרסה ישנה ולא צריך קבלת אישור
+        } else {//אם גרסה ישנה ולא צריך קבלת אישור
             pickImageFromGallery();
         }
     }
     //upload: 7
+
     /**
-     * @param requestCode The request code passed in מספר בקשת ההרשאה
-     * @param permissions The requested permissions. Never null. רשימת ההרשאות לאישור
+     * @param requestCode  The request code passed in מספר בקשת ההרשאה
+     * @param permissions  The requested permissions. Never null. רשימת ההרשאות לאישור
      * @param grantResults The grant results for the corresponding permissions תוצאה עבור כל הרשאה
-     *   PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
+     *                     PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode==PERMISSION_CODE) {//בדיקת קוד בקשת ההרשאה
+        if (requestCode == PERMISSION_CODE) {//בדיקת קוד בקשת ההרשאה
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //permission was granted אם יש אישור
                 pickImageFromGallery();
@@ -392,7 +321,7 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             //חישוב מה הגודל שהועלה
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()/ taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
@@ -402,7 +331,7 @@ public class SignUp extends AppCompatActivity {
             String email = etE_mail.getText().toString();
 
             // استخراج نص كلمة المرور
-            String pass =etpassword.getText().toString();
+            String pass = etpassword.getText().toString();
 
             // استخراج تكرار كلمة المرور
             String repass = etrepassword.getText().toString();
