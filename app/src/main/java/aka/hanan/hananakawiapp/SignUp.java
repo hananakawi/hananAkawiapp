@@ -96,7 +96,7 @@ public class SignUp extends AppCompatActivity {
     }
 
 
-    //FireBase
+    //FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
     private void checkAndSignUP_FB() {
         boolean isAllok = true; // يحوي نتيجة فحص الحقول ان كانت  السليمة
         String email = etE_mail.getText().toString();
@@ -135,7 +135,7 @@ public class SignUp extends AppCompatActivity {
             //عرض نتيجة خطأ في الحقل
             etrepassword.setError("worng password");
         }
-//        if(toUploadimageUri==null) {
+       //if(toUploadimageUri==null) {
 //            isAllok = false;
 //            Toast.makeText(this, "Add Image First", Toast.LENGTH_SHORT).show();
 //        }

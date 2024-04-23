@@ -37,6 +37,10 @@ public class SignIn extends AppCompatActivity {
         etEmail=findViewById(R.id.etEmail);
         etpassword=findViewById(R.id.etpassword);
     }
+
+    /**
+     * الدالة تفحص اذا الايميل وكلمة السر صحيحة
+     */
     private void checkEmailPassFb()
     {
         boolean isAllOk=true; // يحوي نتيجة فحص الحقول ان كانت سليمة
