@@ -17,12 +17,14 @@ import com.google.firebase.auth.FirebaseAuth;
 
 //import aka.hanan.hananakawiapp.data.MainActivity;
 
-
+/**
+ * מחלקה לביצוע כניסה למשתמש קיים
+ */
 public class SignIn extends AppCompatActivity {
-    private TextInputEditText etEmail;
-    private TextInputEditText etpassword;
-    private Button btnSignIn;
-    private Button  btnSignUp;
+    private TextInputEditText etEmail;//שדה אימיל למשתמש קיים
+    private TextInputEditText etpassword;//שדה סיסמה למשתמש קיים
+    private Button btnSignIn;//לחצן לביצוע כניסה
+    private Button  btnSignUp;//לחצן למעבר מסך רישום
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
