@@ -33,13 +33,16 @@ import java.util.UUID;
 
 import aka.hanan.hananakawiapp.data.Tables.MyUser;
 
+/**
+ * מחלקה לביצוע כניסה למשתמש חדש
+ */
 public class SignUp extends AppCompatActivity {
-    private Button btnCancel;
-    private Button btnSave;
-    private TextInputEditText etE_mail;
-    private TextInputEditText etpassword;
+    private Button btnCancel;//לחצן לביצוע ביטול
+    private Button btnSave;//לחצן לביצוע שמירה
+    private TextInputEditText etE_mail;//שדה אימיל למשתמש חדש
+    private TextInputEditText etpassword;//שדה סיסמה למשתמש חדש
     private TextInputEditText etrepassword;
-    private TextInputEditText etname;
+    private TextInputEditText etname;//שדה לשם המשתמש
 
 
     //upload: 1 add Xml image view or button and upload button
@@ -52,6 +55,10 @@ public class SignUp extends AppCompatActivity {
     private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
     MyUser user = new MyUser();
 
+    /**
+     *  הפעולה שבונה new activity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

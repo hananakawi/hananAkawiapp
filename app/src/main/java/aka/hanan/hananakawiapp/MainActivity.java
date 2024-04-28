@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
         }
         if ((item.getItemId() == R.id.itmLogOut)) {
-            Toast.makeText(this, "LogOut", Toast.LENGTH_SHORT).show();
             showYesNoDialog();
         }
         if (item.getItemId() == R.id.itmAddSentence) {
@@ -87,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 //معالجة حدث للموافقة
                 Toast.makeText(MainActivity.this, "Signing out", Toast.LENGTH_SHORT).show();
                 FirebaseAuth.getInstance().signOut();
+                finish();
             }
         });
 

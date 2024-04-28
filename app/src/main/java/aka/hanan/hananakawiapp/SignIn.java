@@ -33,6 +33,7 @@ public class SignIn extends AppCompatActivity {
         {
             Intent i = new Intent(SignIn.this, MainActivity.class);
             startActivity(i);
+            finish();
         }
         etEmail=findViewById(R.id.etEmail);
         etpassword=findViewById(R.id.etpassword);
@@ -79,6 +80,7 @@ public class SignIn extends AppCompatActivity {
                         Toast.makeText(SignIn.this, "Signing In succeeded", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(SignIn.this, MainActivity.class);
                         startActivity(i);
+                        finish();
 
                     } else {
                         Toast.makeText(SignIn.this, "Signing In failed", Toast.LENGTH_SHORT).show();

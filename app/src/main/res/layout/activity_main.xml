@@ -18,13 +18,13 @@
             android:layout_height="match_parent"
             android:hint="text" />
 
-        <Button
-            android:id="@+id/btnconvert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="convert" />
-
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnconvert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="convert" />
 
     <ListView
         android:id="@+id/lst"
