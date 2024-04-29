@@ -1,5 +1,6 @@
 package aka.hanan.hananakawiapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,17 +11,40 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+import aka.hanan.hananakawiapp.data.Tables.MyMessageAdapter;
 
 public class MainActivity extends AppCompatActivity {
+    //spnr1 تعريف صفة للكائن المرئي
+    private Text etText;
+    private Button btnconvert;
+    private ListView lstMessages;
+    private MyMessageAdapter messageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        lstMessages = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
+        messageAdapter = new MyMessageAdapter(this, R.layout.text_item_layout);//בניית המתאם
+        lstMessages.setAdapter(messageAdapter);//קישור המתאם אם המציג הגרפי לאוסף
+
+
     }
 
     @Override//بناء قائمة

@@ -16,7 +16,7 @@ public class Message
     public long keyid;//
     @ColumnInfo(name = "full_Name")
     public  String sentence;//الجملة التي سترجم من لغة الاشارة لاحرف عادية
-    public String ImageHand;// صفة تمثل صورة اليد حسب الرمز الخاص لكل حرف/ جملة
+    public String imageHand;// صفة تمثل صورة اليد حسب الرمز الخاص لكل حرف/ جملة
 
     public String getSentence()
     {
@@ -24,7 +24,7 @@ public class Message
     }
 
     public String getImageHand() {
-        return ImageHand;
+        return imageHand;
     }
 
     public long getKeyid() {
@@ -36,7 +36,7 @@ public class Message
     }
 
     public void setImageHand(String imageHand) {
-        ImageHand = imageHand;
+        imageHand = imageHand;
     }
 
     public void setKeyid(long keyid) {
@@ -47,7 +47,7 @@ public class Message
     public String toString() {
         return "Message{" +
                 "sentence='" + sentence + '\'' +
-                ", ImageHand=" + ImageHand +
+                ", ImageHand=" + imageHand +
                 '}';
     }
 
