@@ -21,7 +21,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -29,8 +31,10 @@ import com.google.firebase.storage.UploadTask;
 
 //import aka.hanan.hananakawiapp.data.AppDataBase;
 //import aka.hanan.hananakawiapp.data.Interface.UserQuery;
+import java.util.ArrayList;
 import java.util.UUID;
 
+import aka.hanan.hananakawiapp.data.Tables.Message;
 import aka.hanan.hananakawiapp.data.Tables.MyUser;
 
 /**
@@ -168,6 +172,9 @@ public class SignUp extends AppCompatActivity {
             });
         }
     }
+
+
+
 
     private void saveUser_FB(MyUser user) {
         //مؤشر لقاعدة البيانات

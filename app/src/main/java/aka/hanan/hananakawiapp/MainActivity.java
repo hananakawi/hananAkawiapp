@@ -1,11 +1,9 @@
 package aka.hanan.hananakawiapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Menu;
@@ -16,16 +14,9 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 import aka.hanan.hananakawiapp.data.Tables.MyMessageAdapter;
 
@@ -39,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         lstMessages = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
         messageAdapter = new MyMessageAdapter(this, R.layout.text_item_layout);//בניית המתאם
         lstMessages.setAdapter(messageAdapter);//קישור המתאם אם המציג הגרפי לאוסף

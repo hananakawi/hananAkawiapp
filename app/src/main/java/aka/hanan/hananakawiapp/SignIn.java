@@ -92,10 +92,6 @@ public class SignIn extends AppCompatActivity {
         }
           }
 
-
-
-
-
     public void onClickSignUP (View v)
     {
 
