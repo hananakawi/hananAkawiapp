@@ -1,0 +1,281 @@
+package aka.hanan.hananakawiapp;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.util.UUID;
+
+import aka.hanan.hananakawiapp.data.Tables.MyUser;
+import aka.hanan.hananakawiapp.data.Tables.Rmoz;
+
+public class AddRmoz1 extends AppCompatActivity {
+    private Button btnSave;
+    private Button btnCancel;
+    private EditText etText;
+    private ImageView imageRmoz;
+
+
+
+
+
+    //upload: 1 add Xml image view or button and upload button
+//upload: 2 add next fileds
+    private final int IMAGE_PICK_CODE = 100;// קוד מזהה לבקשת בחירת תמונה
+    private final int PERMISSION_CODE = 101;//קוד מזהה לבחירת הרשאת גישה לקבצים
+    private ImageButton imgBtnl;//כפתור/ לחצן לבחירת תמונה והצגתה
+    private Button btnUpload;// לחצן לביצוע העלאת התמונה
+    private Uri toUploadimageUri;// כתוב הקובץ(תמונה) שרוצים להעלות
+    private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_rmoz1);
+            etText = findViewById(R.id.etText);
+            btnCancel = findViewById(R.id.btnCancel);
+           btnSave = findViewById(R.id.btnSave);
+           imageRmoz = findViewById(R.id.imageRmoz);
+
+    }
+    //FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
+    private void checkRmz_FB() {
+        boolean isAllok = true; // يحوي نتيجة فحص الحقول ان كانت  السليمة
+      String rmoz=etText.getText().toString();
+
+       if(rmoz.length()<1)
+       {
+           isAllok = false;
+           etText.setError("The Text empty");
+       }
+
+        if(toUploadimageUri==null) {
+           isAllok = false;
+            Toast.makeText(this, "Add Image First", Toast.LENGTH_SHORT).show();
+        }
+        if (isAllok) {
+            //كائن لعملية تسجيل
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            //יצירת חשבון בעזרת מיל ו סיסמא
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override //התגובה שמתקבל הנסיון הרשיום בען
+                public void onComplete(@NonNull Task<AuthResult> task) // הפרמטר מכיל מידע מהשרת על תוצאת הבקשה לרישום
+                {
+                    if (task.isSuccessful()) {//
+                        user.setEmail(email);
+                        //todo set phone
+                        uploadImage(toUploadimageUri);
+                        Toast.makeText(SignUp.this, "Signing up Succeeded", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(SignUp.this, "Signing up Failed", Toast.LENGTH_SHORT).show();
+                        etE_mail.setError(task.getException().getMessage());//
+
+                    }
+                }
+            });
+        }
+    }
+
+
+
+
+    private void savermoz_FB(Rmoz rmz) {
+        //مؤشر لقاعدة البيانات
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //استخراج الرقم المميز للمستعمل الذي سجل الدخول
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        //اضافة كائن لمجموعة المستعملين ومعالج حدث لفحص نجاح الاضافة
+        db.collection("MyRmoz").add(rmz).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(AddRmoz1.this, "Succeed to add User", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(AddRmoz1.this, "Failed to add user", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+
+    /**
+     * نقل الى شاشة اخرى
+     *
+     * @param v
+     */
+    public void onClicksaveSignUp(View v) {
+        checkAndSignUP_FB();
+    }
+
+
+    public void onClickCancelFireBase(View v) {
+        finish();
+    }
+
+    private void pickImageFromGallery() {
+        //implicit intent (מרומז) to pick image
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, IMAGE_PICK_CODE);//הפעלתה האינטנט עם קוד הבקשה
+    }
+
+
+    //upload: 5:handle result of picked images
+
+    /**
+     * @param requestCode מספר הקשה
+     * @param resultCode  תוצאה הבקשה (אם נבחר משהו או בוטלה)
+     * @param data        הנתונים שנבחרו
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //אם נבחר משהו ואם זה קוד בקשת התמונה
+        if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
+            //a עידכון תכונת כתובת התמונה
+            toUploadimageUri = data.getData();//קבלת כתובת התמונה הנתונים שניבחרו
+            imgBtnl.setImageURI(toUploadimageUri);// הצגת התמונה שנבחרה על רכיב התמונה
+        }
+    }
+    //upload: 6
+
+    /**
+     * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
+     */
+    private void checkPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//בדיקת גרסאות
+            //בדיקה אם ההשאה לא אושרה בעבר
+            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                //רשימת ההרשאות שרוצים לבקש אישור
+                String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+                //בקשת אישור ההשאות (שולחים קוד הבקשה)
+                //התשובה תתקבל בפעולה onRequestPermissionsResult
+                requestPermissions(permissions, PERMISSION_CODE);
+            } else {
+                //permission already granted אם יש הרשאה מקודם אז מפעילים בחירת תמונה מהטלפון
+                pickImageFromGallery();
+            }
+        } else {//אם גרסה ישנה ולא צריך קבלת אישור
+            pickImageFromGallery();
+        }
+    }
+    //upload: 7
+
+    /**
+     * @param requestCode  The request code passed in מספר בקשת ההרשאה
+     * @param permissions  The requested permissions. Never null. רשימת ההרשאות לאישור
+     * @param grantResults The grant results for the corresponding permissions תוצאה עבור כל הרשאה
+     *                     PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE) {//בדיקת קוד בקשת ההרשאה
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //permission was granted אם יש אישור
+                pickImageFromGallery();
+            } else {
+                //permission was denied אם אין אישור
+                Toast.makeText(this, "Permission denied...!", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    private void uploadImage(Uri filePath) {
+        if (filePath != null) {
+            //יצירת דיאלוג התקדמות
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();//הצגת הדיאלוג
+            //קבלת כתובת האחסון בענן
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage.getReference();
+            //יצירת תיקיה ושם גלובלי לקובץ
+            final StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            // יצירת ״תהליך מקביל״ להעלאת תמונה
+            ref.putFile(filePath)
+                    //הוספת מאזין למצב ההעלאה
+                    .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();// הסתרת הדיאלוג
+                                //קבלת כתובת הקובץ שהועלה
+                                ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Uri> task) {
+                                        downladuri = task.getResult();
+                                        Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                                        user.setImage(downladuri.toString());//עדכון כתובת התמונה שהועלתה
+
+                                        savermoz_FB(rmz);
+                                    }
+                                });
+                            } else {
+                                progressDialog.dismiss();//הסתרת הדיאלוג
+                                Toast.makeText(getApplicationContext(), "Failed " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    //הוספת מאזין שמציג מהו אחוז ההעלאה
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            //חישוב מה הגודל שהועלה
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
+                                    .getTotalByteCount());
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        }
+                    });
+        } else {
+            // استخراج النص من حقل الايميل
+            String email = etE_mail.getText().toString();
+
+            // استخراج نص كلمة المرور
+            String pass = etpassword.getText().toString();
+
+            // استخراج تكرار كلمة المرور
+            String repass = etrepassword.getText().toString();
+
+            // استخراج الاسم
+            String name = etname.getText().toString();
+
+
+            saveUser_FB(user);
+
+        }
+    }
+
+}
+
+
+
