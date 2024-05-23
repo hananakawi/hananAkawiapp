@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.w3c.dom.Text;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnconvert;
     private ListView lstMessages;
     private MyMessageAdapter messageAdapter;
+    private FloatingActionButton fabAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
         lstMessages = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
         messageAdapter = new MyMessageAdapter(this, R.layout.text_item_layout);//בניית המתאם
         lstMessages.setAdapter(messageAdapter);//קישור המתאם אם המציג הגרפי לאוסף
+        fabAdd = findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, AddRmoz1.class);
+                startActivity(i);
+            }
+        });
 
 
     }
@@ -117,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();//بناء شباك الحوار - ديالوغ
         dialog.show();//عرض الشباك
     }
+
 }
 
 

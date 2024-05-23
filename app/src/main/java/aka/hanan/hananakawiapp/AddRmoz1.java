@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,7 +28,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
-import aka.hanan.hananakawiapp.data.Tables.MyUser;
 import aka.hanan.hananakawiapp.data.Tables.Rmoz;
 
 public class AddRmoz1 extends AppCompatActivity {
@@ -38,6 +36,8 @@ public class AddRmoz1 extends AppCompatActivity {
     private EditText etText;
     private ImageView imageRmoz;
 
+
+    private Rmoz r=new Rmoz();
 
 
 
@@ -59,14 +59,35 @@ public class AddRmoz1 extends AppCompatActivity {
             btnCancel = findViewById(R.id.btnCancel);
            btnSave = findViewById(R.id.btnSave);
            imageRmoz = findViewById(R.id.imageRmoz);
+           imageRmoz.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   checkImagePermission();
+
+               }
+           });
+           btnSave.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+
+                   checkRmz_FB();
+               }
+           });
+           btnCancel.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   finish();
+
+               }
+           });
 
     }
     //FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
     private void checkRmz_FB() {
         boolean isAllok = true; // يحوي نتيجة فحص الحقول ان كانت  السليمة
-      String rmoz=etText.getText().toString();
+      String text =etText.getText().toString();
 
-       if(rmoz.length()<1)
+       if(text.length()<1)
        {
            isAllok = false;
            etText.setError("The Text empty");
@@ -77,26 +98,8 @@ public class AddRmoz1 extends AppCompatActivity {
             Toast.makeText(this, "Add Image First", Toast.LENGTH_SHORT).show();
         }
         if (isAllok) {
-            //كائن لعملية تسجيل
-            FirebaseAuth auth = FirebaseAuth.getInstance();
-            //יצירת חשבון בעזרת מיל ו סיסמא
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override //התגובה שמתקבל הנסיון הרשיום בען
-                public void onComplete(@NonNull Task<AuthResult> task) // הפרמטר מכיל מידע מהשרת על תוצאת הבקשה לרישום
-                {
-                    if (task.isSuccessful()) {//
-                        user.setEmail(email);
-                        //todo set phone
-                        uploadImage(toUploadimageUri);
-                        Toast.makeText(SignUp.this, "Signing up Succeeded", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        Toast.makeText(SignUp.this, "Signing up Failed", Toast.LENGTH_SHORT).show();
-                        etE_mail.setError(task.getException().getMessage());//
-
-                    }
-                }
-            });
+          r.setText(text);
+          uploadImage(toUploadimageUri);
         }
     }
 
@@ -126,19 +129,8 @@ public class AddRmoz1 extends AppCompatActivity {
     }
 
 
-    /**
-     * نقل الى شاشة اخرى
-     *
-     * @param v
-     */
-    public void onClicksaveSignUp(View v) {
-        checkAndSignUP_FB();
-    }
 
 
-    public void onClickCancelFireBase(View v) {
-        finish();
-    }
 
     private void pickImageFromGallery() {
         //implicit intent (מרומז) to pick image
@@ -170,7 +162,7 @@ public class AddRmoz1 extends AppCompatActivity {
     /**
      * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
      */
-    private void checkPermission() {
+    private void checkImagePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//בדיקת גרסאות
             //בדיקה אם ההשאה לא אושרה בעבר
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -235,9 +227,9 @@ public class AddRmoz1 extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<Uri> task) {
                                         downladuri = task.getResult();
                                         Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
-                                        user.setImage(downladuri.toString());//עדכון כתובת התמונה שהועלתה
+                                        r.setImageHand(downladuri.toString());//עדכון כתובת התמונה שהועלתה
 
-                                        savermoz_FB(rmz);
+                                        savermoz_FB(r);
                                     }
                                 });
                             } else {
@@ -257,20 +249,7 @@ public class AddRmoz1 extends AppCompatActivity {
                         }
                     });
         } else {
-            // استخراج النص من حقل الايميل
-            String email = etE_mail.getText().toString();
 
-            // استخراج نص كلمة المرور
-            String pass = etpassword.getText().toString();
-
-            // استخراج تكرار كلمة المرور
-            String repass = etrepassword.getText().toString();
-
-            // استخراج الاسم
-            String name = etname.getText().toString();
-
-
-            saveUser_FB(user);
 
         }
     }

@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/fabAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -21,6 +21,7 @@
         android:orientation="vertical">
 
         <SearchView
+            android:id="@+id/srcview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
