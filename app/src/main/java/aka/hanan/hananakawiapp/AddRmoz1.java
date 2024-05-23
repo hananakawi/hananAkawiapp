@@ -1,7 +1,13 @@
 package aka.hanan.hananakawiapp;
 
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -39,7 +45,21 @@ public class AddRmoz1 extends AppCompatActivity {
 
     private Rmoz r=new Rmoz();
 
-
+    private ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // Permission is granted. Continue the action or workflow in your
+                    // app.
+                    pickImageFromGallery();
+                } else {
+                    // Explain to the user that the feature is unavailable because the
+                    // feature requires a permission that the user has denied. At the
+                    // same time, respect the user's decision. Don't link to system
+                    // settings in an effort to convince the user to change their
+                    // decision.
+                    Toast.makeText(this, "Extentnal permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
     //upload: 1 add Xml image view or button and upload button
@@ -80,6 +100,7 @@ public class AddRmoz1 extends AppCompatActivity {
 
                }
            });
+
 
     }
     //FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
@@ -163,21 +184,39 @@ public class AddRmoz1 extends AppCompatActivity {
      * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
      */
     private void checkImagePermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//בדיקת גרסאות
-            //בדיקה אם ההשאה לא אושרה בעבר
-            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                //רשימת ההרשאות שרוצים לבקש אישור
-                String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
-                //בקשת אישור ההשאות (שולחים קוד הבקשה)
-                //התשובה תתקבל בפעולה onRequestPermissionsResult
-                requestPermissions(permissions, PERMISSION_CODE);
-            } else {
-                //permission already granted אם יש הרשאה מקודם אז מפעילים בחירת תמונה מהטלפון
-                pickImageFromGallery();
-            }
-        } else {//אם גרסה ישנה ולא צריך קבלת אישור
-            pickImageFromGallery();
+        if (ContextCompat.checkSelfPermission(
+                this,READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // You can use the API that requires the permission.
+           pickImageFromGallery();
+        } else if (ActivityCompat.shouldShowRequestPermissionRationale(
+                this,READ_EXTERNAL_STORAGE)) {
+            // In an educational UI, explain to the user why your app requires this
+            // permission for a specific feature to behave as expected, and what
+            // features are disabled if it's declined. In this UI, include a
+            // "cancel" or "no thanks" button that lets the user continue
+            // using your app without granting the permission.
+            Toast.makeText(this, "you must drant this permission", Toast.LENGTH_SHORT).show();
+        } else {
+            // You can directly ask for the permission.
+            // The registered ActivityResultCallback gets the result of this request.
+            requestPermissionLauncher.launch(
+                    READ_EXTERNAL_STORAGE);
         }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//בדיקת גרסאות
+//            //בדיקה אם ההשאה לא אושרה בעבר
+//            if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+//                //רשימת ההרשאות שרוצים לבקש אישור
+//                String[] permissions = {android.Manifest.permission.READ_EXTERNAL_STORAGE};
+//                //בקשת אישור ההשאות (שולחים קוד הבקשה)
+//                //התשובה תתקבל בפעולה onRequestPermissionsResult
+//                requestPermissions(permissions, PERMISSION_CODE);
+//            } else {
+//                //permission already granted אם יש הרשאה מקודם אז מפעילים בחירת תמונה מהטלפון
+//                pickImageFromGallery();
+//            }
+//        } else {//אם גרסה ישנה ולא צריך קבלת אישור
+//            pickImageFromGallery();
+//        }
     }
     //upload: 7
 
