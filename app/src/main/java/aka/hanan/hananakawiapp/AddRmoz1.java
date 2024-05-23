@@ -41,6 +41,13 @@ public class AddRmoz1 extends AppCompatActivity {
     private Button btnCancel;
     private EditText etText;
     private ImageView imageRmoz;
+    //upload: 1 add Xml image view or button and upload button
+//upload: 2 add next fileds
+    private final int IMAGE_PICK_CODE = 100;// קוד מזהה לבקשת בחירת תמונה
+    private final int PERMISSION_CODE = 101;//קוד מזהה לבחירת הרשאת גישה לקבצים
+    private Button btnUpload;// לחצן לביצוע העלאת התמונה
+    private Uri toUploadimageUri;// כתוב הקובץ(תמונה) שרוצים להעלות
+    private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
 
 
     private Rmoz r=new Rmoz();
@@ -62,14 +69,6 @@ public class AddRmoz1 extends AppCompatActivity {
             });
 
 
-    //upload: 1 add Xml image view or button and upload button
-//upload: 2 add next fileds
-    private final int IMAGE_PICK_CODE = 100;// קוד מזהה לבקשת בחירת תמונה
-    private final int PERMISSION_CODE = 101;//קוד מזהה לבחירת הרשאת גישה לקבצים
-    private ImageButton imgBtnl;//כפתור/ לחצן לבחירת תמונה והצגתה
-    private Button btnUpload;// לחצן לביצוע העלאת התמונה
-    private Uri toUploadimageUri;// כתוב הקובץ(תמונה) שרוצים להעלות
-    private Uri downladuri;//כתובת הקוץ בענן אחרי ההעלאה
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +174,7 @@ public class AddRmoz1 extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == IMAGE_PICK_CODE) {
             //a עידכון תכונת כתובת התמונה
             toUploadimageUri = data.getData();//קבלת כתובת התמונה הנתונים שניבחרו
-            imgBtnl.setImageURI(toUploadimageUri);// הצגת התמונה שנבחרה על רכיב התמונה
+            imageRmoz.setImageURI(toUploadimageUri);// הצגת התמונה שנבחרה על רכיב התמונה
         }
     }
     //upload: 6
