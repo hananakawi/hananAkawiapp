@@ -1,5 +1,6 @@
 package aka.hanan.hananakawiapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,10 +16,17 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 import aka.hanan.hananakawiapp.data.Tables.MyMessageAdapter;
 
@@ -45,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
 
 
     }
@@ -128,6 +137,45 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();//بناء شباك الحوار - ديالوغ
         dialog.show();//عرض الشباك
     }
+    /**
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     */
+    public void readTaskFrom_FB()
+    {
+        //בניית רשימה ריקה
+        ArrayList<Message> arrayList =new ArrayList<>();
+        //קבלת הפנייה למסד הנתונים
+        FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
+        //קישור לקבוצה collection שרוצים לקרוא
+        ffRef.collection("MyUsers").
+                document(FirebaseAuth.getInstance().getUid()).
+                collection("meassages").
+                document(spnrSubject.getSelectedItem().toString()).
+                //הוספת מאזין לקריאת הנתונים
+                        collection("Tasks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    /**
+                     * תגובה לאירוע השלמת קריאת הנתונים
+                     * @param task הנתונים שהתקבלו מענן מסד הנתונים
+                     */
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
+                            //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
+                                arrayList.add(document.toObject(Message.class));
+                            }
+                            messageAdapter.clear();//ניקוי המתאם מכל הנתונים
+                           messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם
+                        }
+                        else{
+                            Toast.makeText(MainActivity.this, "Error Reading data"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
 
 }
 
