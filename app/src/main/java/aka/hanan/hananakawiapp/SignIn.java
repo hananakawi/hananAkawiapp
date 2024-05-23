@@ -69,7 +69,6 @@ public class SignIn extends AppCompatActivity {
 
         if (isAllOk)
         {
-            Toast.makeText(this,"All ok",Toast.LENGTH_SHORT).show();
 
             FirebaseAuth auth = FirebaseAuth.getInstance();//بناء كائن لعملية التسجيل
             auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
