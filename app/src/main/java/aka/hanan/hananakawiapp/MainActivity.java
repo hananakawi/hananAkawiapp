@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,11 +33,11 @@ import aka.hanan.hananakawiapp.data.Tables.MyMessageAdapter;
 
 public class MainActivity extends AppCompatActivity {
     //spnr1 تعريف صفة للكائن المرئي
-    private Text etText;
-    private Button btnconvert;
+
     private ListView lstMessages;
     private MyMessageAdapter messageAdapter;
     private FloatingActionButton fabAdd;
+    private Spinner spnrmeassages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         lstMessages = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
         messageAdapter = new MyMessageAdapter(this, R.layout.text_item_layout);//בניית המתאם
         lstMessages.setAdapter(messageAdapter);//קישור המתאם אם המציג הגרפי לאוסף
+        spnrmeassages=findViewById(R.id.spnrmeassages);
         fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     /**
      * دالة مساعدة لفتح قائمة تتلقى بارمتر للكائن الذي سبب فتح القائمة
@@ -151,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
         ffRef.collection("MyUsers").
                 document(FirebaseAuth.getInstance().getUid()).
                 collection("meassages").
-                document(spnrSubject.getSelectedItem().toString()).
+                document(spnrmeassages.getSelectedItem().toString()).
                 //הוספת מאזין לקריאת הנתונים
                         collection("Tasks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     /**

@@ -27,6 +27,11 @@
 
         </SearchView>
 
+        <Spinner
+            android:id="@+id/spnrmeassages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ListView
             android:id="@+id/lst"
             android:layout_width="match_parent"
