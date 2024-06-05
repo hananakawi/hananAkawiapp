@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/itmAddSentence"
-        android:title="AddSentence" />
+        android:id="@+id/itmAddRmoz"
+        android:title="AddRmoz" />
     <item
         android:id="@+id/itmLogOut"
         android:title="LogOut" />

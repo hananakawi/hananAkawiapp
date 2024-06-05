@@ -11,7 +11,6 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
@@ -24,8 +23,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -56,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     @Override//بناء قائمة
@@ -75,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if ((item.getItemId() == R.id.itmLogOut)) {
             showYesNoDialog();
         }
-        if (item.getItemId() == R.id.itmAddSentence) {
+        if (item.getItemId() == R.id.itmAddRmoz) {
             Toast.makeText(MainActivity.this, "Add", Toast.LENGTH_SHORT).show();
             //* Intent i = new Intent(MainActivity.this, AddTaskActivity.class);
             //* startActivity(i);
@@ -170,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                                 arrayList.add(document.toObject(Message.class));
                             }
                             messageAdapter.clear();//ניקוי המתאם מכל הנתונים
-                           messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם
+                          // messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם
                         }
                         else{
                             Toast.makeText(MainActivity.this, "Error Reading data"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
