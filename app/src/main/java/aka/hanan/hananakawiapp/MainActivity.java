@@ -26,13 +26,14 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-import aka.hanan.hananakawiapp.data.Tables.MyMessageAdapter;
+import aka.hanan.hananakawiapp.data.Tables.AdapterRmoz;
+import aka.hanan.hananakawiapp.data.Tables.Rmoz;
 
 public class MainActivity extends AppCompatActivity {
     //spnr1 تعريف صفة للكائن المرئي
 
-    private ListView lstMessages;
-    private MyMessageAdapter messageAdapter;
+    private ListView lstrmoz;
+    private AdapterRmoz romozAdapter;
     private FloatingActionButton fabAdd;
     private Spinner spnrmeassages;
 
@@ -40,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        lstMessages = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
-        messageAdapter = new MyMessageAdapter(this, R.layout.text_item_layout);//בניית המתאם
-        lstMessages.setAdapter(messageAdapter);//קישור המתאם אם המציג הגרפי לאוסף
+        lstrmoz = findViewById(R.id.lst);//הפניה לרכיב הגרפי שמציג אוסף
+        romozAdapter = new AdapterRmoz(this, R.layout.text_item_layout);//בניית המתאם
+        lstrmoz.setAdapter(romozAdapter);//קישור המתאם אם המציג הגרפי לאוסף
         spnrmeassages=findViewById(R.id.spnrmeassages);
         fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +54,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        readTaskFrom_FB();
     }
 
     @Override//بناء قائمة
@@ -142,16 +149,13 @@ public class MainActivity extends AppCompatActivity {
     public void readTaskFrom_FB()
     {
         //בניית רשימה ריקה
-        ArrayList<Message> arrayList =new ArrayList<>();
+        ArrayList<Rmoz> arrayList =new ArrayList<>();
         //קבלת הפנייה למסד הנתונים
         FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
         //קישור לקבוצה collection שרוצים לקרוא
-        ffRef.collection("MyUsers").
-                document(FirebaseAuth.getInstance().getUid()).
-                collection("meassages").
-                document(spnrmeassages.getSelectedItem().toString()).
+
                 //הוספת מאזין לקריאת הנתונים
-                        collection("Tasks").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        ffRef.collection("MyRmoz").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     /**
                      * תגובה לאירוע השלמת קריאת הנתונים
                      * @param task הנתונים שהתקבלו מענן מסד הנתונים
@@ -162,9 +166,10 @@ public class MainActivity extends AppCompatActivity {
                             //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
                             for (DocumentSnapshot document : task.getResult().getDocuments()) {
                                 //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
-                                arrayList.add(document.toObject(Message.class));
+                                arrayList.add(document.toObject(Rmoz.class));
                             }
-                            messageAdapter.clear();//ניקוי המתאם מכל הנתונים
+                            romozAdapter.clear();//ניקוי המתאם מכל הנתונים
+                            romozAdapter.addAll(arrayList);
                           // messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם
                         }
                         else{

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddRmoz1">
+    tools:context=".learnactivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,33 +13,29 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnCancel"
+            android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancel" />
+            android:text="Button" />
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/button4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Save" />
-
+            android:text="Button" />
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/etText"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="word or letter"
-        android:inputType="textPersonName" />
+        android:text="TextView" />
 
     <ImageView
-        android:id="@+id/imageRmoz"
+        android:id="@+id/imageView2"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/letschat" />
-
+        app:srcCompat="@drawable/letschat" />
 </LinearLayout>
