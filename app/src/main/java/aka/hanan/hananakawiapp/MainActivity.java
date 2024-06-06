@@ -168,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                                 //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
                                 arrayList.add(document.toObject(Rmoz.class));
                             }
+
                             romozAdapter.clear();//ניקוי המתאם מכל הנתונים
                             romozAdapter.addAll(arrayList);
                           // messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם

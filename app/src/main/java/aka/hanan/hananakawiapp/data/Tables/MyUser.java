@@ -10,12 +10,28 @@ public class MyUser {
     public long keyid;
     @ColumnInfo(name = "full_Name")
     public String name;//اسم الشخص
-    public boolean Isdeaf;//هل الشخص اخرس
-    public  boolean Isdumb;//هل هو اطرش
+    public boolean cliant;//هل الشخص مستخدم عادي
+    public  boolean princepal;//هل المستخدم مدير
     public String email;//البريد الالكتروني الشخصي للشخص
     public String pass;//كلمة السر
     String image;
     String phone;
+
+    public boolean isPrincepal() {
+        return princepal;
+    }
+
+    public void setPrincepal(boolean princepal) {
+        this.princepal = princepal;
+    }
+
+    public boolean isCliant() {
+        return cliant;
+    }
+
+    public void setCliant(boolean cliant) {
+        this.cliant = cliant;
+    }
 
     public String getImage() {
         return image;
@@ -41,21 +57,6 @@ public class MyUser {
         this.name = name;
     }
 
-    public boolean isIsdeaf() {
-        return Isdeaf;
-    }
-
-    public void setIsdeaf(boolean isdeaf) {
-        Isdeaf = isdeaf;
-    }
-
-    public boolean isIsdumb() {
-        return Isdumb;
-    }
-
-    public void setIsdumb(boolean isdumb) {
-        Isdumb = isdumb;
-    }
 
     public long getKeyid() {
         return keyid;
@@ -81,12 +82,6 @@ public class MyUser {
         this.pass = pass;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "name='" + name + '\'' +
-                ", Isdeaf=" + Isdeaf +
-                ", Isdumb=" + Isdumb +
-                '}';
+
     }
-}
+
