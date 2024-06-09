@@ -1,0 +1,36 @@
+@startuml
+class MainActivity {
+- ListView lstrmoz
+- AdapterRmoz romozAdapter
+- FloatingActionButton fabAdd
+- Spinner spnrmeassages
+# void onCreate(Bundle)
+# void onResume()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void showPopUpMenu(View,Message)
++ void showYesNoDialog()
++ void readTaskFrom_FB()
+}
+
+note left of MainActivity::showPopUpMenu(View,Message)
+
+     * دالة مساعدة لفتح قائمة تتلقى بارمتر للكائن الذي سبب فتح القائمة
+     
+end note
+note right of MainActivity::showYesNoDialog()
+
+     * دالة مسؤولة عن بناء ديالوج
+     
+end note
+note left of MainActivity::readTaskFrom_FB()
+
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     
+end note
+
+
+
+AppCompatActivity <|-- MainActivity
+@enduml
