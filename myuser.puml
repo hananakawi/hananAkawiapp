@@ -1,0 +1,42 @@
+@startuml
+class aka.hanan.hananakawiapp.data.Tables.MyUser {
++ long keyid
++ String name
++ boolean cliant
++ boolean princepal
++ String email
++ String pass
+~ String image
+~ String phone
++ boolean isPrincepal()
++ void setPrincepal(boolean)
++ boolean isCliant()
++ void setCliant(boolean)
++ String getImage()
++ String getPhone()
++ void setPhone(String)
++ void setImage(String)
++ String getName()
++ void setName(String)
++ long getKeyid()
++ void setKeyid(long)
++ String getEmail()
++ void setEmail(String)
++ String getPass()
++ void setPass(String)
+}
+note left of aka.hanan.hananakawiapp.data.Tables.MyUser::cliant
+هل الشخص مستخدم عادي
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.MyUser::princepal
+هل المستخدم مدير
+end note
+note left of aka.hanan.hananakawiapp.data.Tables.MyUser::email
+البريد الالكتروني الشخصي للشخص
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.MyUser::pass
+كلمة السر
+end note
+
+
+@enduml

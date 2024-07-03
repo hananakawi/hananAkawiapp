@@ -1,0 +1,390 @@
+@startuml
+class aka.hanan.hananakawiapp.SignUp {
+- Button btnCancel
+- Button btnSave
+- TextInputEditText etE_mail
+- TextInputEditText etpassword
+- TextInputEditText etrepassword
+- TextInputEditText etname
+- int IMAGE_PICK_CODE
+- int PERMISSION_CODE
+- ImageButton imgBtnl
+- Button btnUpload
+- Uri toUploadimageUri
+- Uri downladuri
+~ MyUser user
+# void onCreate(Bundle)
++ void onClickSavefirebase(View)
++ void onClickCancelfirebase(View)
+- void checkAndSignUP_FB()
+- void saveUser_FB(MyUser)
++ void onClicksaveSignUp(View)
++ void onClickCancelFireBase(View)
+- void pickImageFromGallery()
+# void onActivityResult(int,int,Intent)
+- void checkPermission()
++ void onRequestPermissionsResult(int,String[],int[])
+- void uploadImage(Uri)
+}
+note top of aka.hanan.hananakawiapp.SignUp
+
+ * מחלקה לביצוע כניסה למשתמש חדש
+ 
+end note
+
+note left of aka.hanan.hananakawiapp.SignUp::btnCancel
+לחצן לביצוע ביטול
+end note
+note right of aka.hanan.hananakawiapp.SignUp::btnSave
+לחצן לביצוע שמירה
+end note
+note left of aka.hanan.hananakawiapp.SignUp::etE_mail
+שדה אימיל למשתמש חדש
+end note
+note right of aka.hanan.hananakawiapp.SignUp::etpassword
+שדה סיסמה למשתמש חדש
+end note
+note left of aka.hanan.hananakawiapp.SignUp::etname
+שדה לשם המשתמש
+end note
+note right of aka.hanan.hananakawiapp.SignUp::IMAGE_PICK_CODE
+ קוד מזהה לבקשת בחירת תמונה
+end note
+note left of aka.hanan.hananakawiapp.SignUp::PERMISSION_CODE
+קוד מזהה לבחירת הרשאת גישה לקבצים
+end note
+note right of aka.hanan.hananakawiapp.SignUp::imgBtnl
+כפתור/ לחצן לבחירת תמונה והצגתה
+end note
+note left of aka.hanan.hananakawiapp.SignUp::btnUpload
+ לחצן לביצוע העלאת התמונה
+end note
+note right of aka.hanan.hananakawiapp.SignUp::toUploadimageUri
+ כתוב הקובץ(תמונה) שרוצים להעלות
+end note
+note left of aka.hanan.hananakawiapp.SignUp::downladuri
+כתובת הקוץ בענן אחרי ההעלאה
+end note
+
+note left of aka.hanan.hananakawiapp.SignUp::onCreate(Bundle)
+
+     *  הפעולה שבונה new activity
+     * @param savedInstanceState
+     
+end note
+note right of aka.hanan.hananakawiapp.SignUp::checkAndSignUP_FB()
+FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
+end note
+note left of aka.hanan.hananakawiapp.SignUp::onClicksaveSignUp(View)
+
+     * نقل الى شاشة اخرى
+     *
+     * @param v
+     
+end note
+note right of aka.hanan.hananakawiapp.SignUp::onActivityResult(int,int,Intent)
+
+     * @param requestCode מספר הקשה
+     * @param resultCode  תוצאה הבקשה (אם נבחר משהו או בוטלה)
+     * @param data        הנתונים שנבחרו
+     
+end note
+note left of aka.hanan.hananakawiapp.SignUp::checkPermission()
+
+     * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
+     
+end note
+note right of aka.hanan.hananakawiapp.SignUp::onRequestPermissionsResult(int,String[],int[])
+
+     * @param requestCode  The request code passed in מספר בקשת ההרשאה
+     * @param permissions  The requested permissions. Never null. רשימת ההרשאות לאישור
+     * @param grantResults The grant results for the corresponding permissions תוצאה עבור כל הרשאה
+     *                     PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
+     
+end note
+
+class aka.hanan.hananakawiapp.translateactivity {
+# void onCreate(Bundle)
+}
+
+class aka.hanan.hananakawiapp.data.Tables.Message {
++ long keyid
++ String sentence
++ String imageHand
++ String getSentence()
++ String getImageHand()
++ long getKeyid()
++ void setSentence(String)
++ void setImageHand(String)
++ void setKeyid(long)
++ String toString()
+}
+note top of aka.hanan.hananakawiapp.data.Tables.Message
+
+ * فئة الرسائل  تحوي صفتين
+ 
+end note
+
+note left of aka.hanan.hananakawiapp.data.Tables.Message::imageHand
+ صفة تمثل صورة اليد حسب الرمز الخاص لكل حرف/ جملة
+end note
+
+
+class aka.hanan.hananakawiapp.data.Tables.Rmoz {
++ long keyid
++ String text
++ String letter
++ String imageHand
++ String id
++ String getId()
++ void setId(String)
++ String getImageHand()
++ void setImageHand(String)
++ long getKeyid()
++ void setKeyid(long)
++ String getLetter()
++ void setLetter(String)
++ String getText()
++ void setText(String)
+}
+note left of aka.hanan.hananakawiapp.data.Tables.Rmoz::letter
+حرف نحوله من حرف الى لغة اشارة
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.Rmoz::imageHand
+صورة اليد الخاصة بالحرف او بالنص
+end note
+
+
+class aka.hanan.hananakawiapp.SignIn {
+- TextInputEditText etEmail
+- TextInputEditText etpassword
+- Button btnSignIn
+- Button btnSignUp
+# void onCreate(Bundle)
+- void checkEmailPassFb()
++ void onClickSignUP(View)
++ void onClickSigninFIREBASE(View)
++ void onClickCancel(View)
+}
+note top of aka.hanan.hananakawiapp.SignIn
+
+ * מחלקה לביצוע כניסה למשתמש קיים
+ 
+end note
+
+note left of aka.hanan.hananakawiapp.SignIn::etEmail
+שדה אימיל למשתמש קיים
+end note
+note right of aka.hanan.hananakawiapp.SignIn::etpassword
+שדה סיסמה למשתמש קיים
+end note
+note left of aka.hanan.hananakawiapp.SignIn::btnSignIn
+לחצן לביצוע כניסה
+end note
+note right of aka.hanan.hananakawiapp.SignIn::btnSignUp
+לחצן למעבר מסך רישום
+end note
+
+note left of aka.hanan.hananakawiapp.SignIn::checkEmailPassFb()
+
+     * الدالة تفحص اذا الايميل وكلمة السر صحيحة
+     
+end note
+
+class aka.hanan.hananakawiapp.learninggame {
+# void onCreate(Bundle)
+}
+
+class aka.hanan.hananakawiapp.learn {
+# void onCreate(Bundle)
+}
+
+class aka.hanan.hananakawiapp.MainActivity {
+- ListView lstrmoz
+- AdapterRmoz romozAdapter
+- FloatingActionButton fabAdd
+- Spinner spnrmeassages
+# void onCreate(Bundle)
+# void onResume()
++ boolean onCreateOptionsMenu(Menu)
++ boolean onOptionsItemSelected(MenuItem)
++ void showPopUpMenu(View,Message)
++ void showYesNoDialog()
++ void readTaskFrom_FB()
+}
+
+note left of aka.hanan.hananakawiapp.MainActivity::showPopUpMenu(View,Message)
+
+     * دالة مساعدة لفتح قائمة تتلقى بارمتر للكائن الذي سبب فتح القائمة
+     
+end note
+note right of aka.hanan.hananakawiapp.MainActivity::readTaskFrom_FB()
+
+     *  קריאת נתונים ממסד הנתונים firestore
+     * @return .... רשימת הנתונים שנקראה ממסד הנתונים
+     
+end note
+
+class aka.hanan.hananakawiapp.SplashScreen {
+# void onCreate(Bundle)
+}
+
+class aka.hanan.hananakawiapp.AddRmoz1 {
+- Button btnSave
+- Button btnCancel
+- EditText etText
+- ImageView imageRmoz
+- int IMAGE_PICK_CODE
+- int PERMISSION_CODE
+- Button btnUpload
+- Uri toUploadimageUri
+- Uri downladuri
+- Rmoz r
+- ActivityResultLauncher<String> requestPermissionLauncher
+# void onCreate(Bundle)
+- void checkRmz_FB()
+- void savermoz_FB(Rmoz)
+- void pickImageFromGallery()
+# void onActivityResult(int,int,Intent)
+- void checkImagePermission()
++ void onRequestPermissionsResult(int,String[],int[])
+- void uploadImage(Uri)
+}
+note left of aka.hanan.hananakawiapp.AddRmoz1::IMAGE_PICK_CODE
+ קוד מזהה לבקשת בחירת תמונה
+end note
+note right of aka.hanan.hananakawiapp.AddRmoz1::PERMISSION_CODE
+קוד מזהה לבחירת הרשאת גישה לקבצים
+end note
+note left of aka.hanan.hananakawiapp.AddRmoz1::btnUpload
+ לחצן לביצוע העלאת התמונה
+end note
+note right of aka.hanan.hananakawiapp.AddRmoz1::toUploadimageUri
+ כתוב הקובץ(תמונה) שרוצים להעלות
+end note
+note left of aka.hanan.hananakawiapp.AddRmoz1::downladuri
+כתובת הקוץ בענן אחרי ההעלאה
+end note
+
+note left of aka.hanan.hananakawiapp.AddRmoz1::checkRmz_FB()
+FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
+end note
+note right of aka.hanan.hananakawiapp.AddRmoz1::onActivityResult(int,int,Intent)
+
+     * @param requestCode מספר הקשה
+     * @param resultCode  תוצאה הבקשה (אם נבחר משהו או בוטלה)
+     * @param data        הנתונים שנבחרו
+     
+end note
+note left of aka.hanan.hananakawiapp.AddRmoz1::checkImagePermission()
+
+     * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
+     
+end note
+note right of aka.hanan.hananakawiapp.AddRmoz1::onRequestPermissionsResult(int,String[],int[])
+
+     * @param requestCode  The request code passed in מספר בקשת ההרשאה
+     * @param permissions  The requested permissions. Never null. רשימת ההרשאות לאישור
+     * @param grantResults The grant results for the corresponding permissions תוצאה עבור כל הרשאה
+     *                     PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
+     
+end note
+
+class aka.hanan.hananakawiapp.learnactivity {
+# void onCreate(Bundle)
+}
+
+class aka.hanan.hananakawiapp.data.Tables.AdapterRmoz {
+- int itemLayout
+- Rmoz current
++ View getView(int,View,ViewGroup)
+- void downloadImageUsingPicasso(String,ImageView)
+- void delMyrmozFromDB_FB(Rmoz)
+- void deleteFile(String)
+}
+note left of aka.hanan.hananakawiapp.data.Tables.AdapterRmoz::itemLayout
+המזהה של קובץ עיצוב הפריט
+end note
+
+note left of aka.hanan.hananakawiapp.data.Tables.AdapterRmoz::getView(int,View,ViewGroup)
+
+     * * בונה פריט גרפי אחד בהתאם לעיצוב והצגת נתוני העצם עליו
+     * @param position מיקום הפריט החל מ 0
+     * @param convertView
+     * @param parent רכיב האוסף שיכיל את הפריטים כמו listview
+     * @return  . פריט גרפי שמציג נתוני עצם א
+     
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.AdapterRmoz::downloadImageUsingPicasso(String,ImageView)
+
+     * הצגת תמונה ישירות מהענן בעזרת המחלקה ״פיקאסו״
+     * @param imageUrL כתובת התמונה בענן/שרת
+     * @param toView רכיב תמונה המיועד להצגת התמונה אחרי ההורדה
+     
+end note
+note left of aka.hanan.hananakawiapp.data.Tables.AdapterRmoz::delMyrmozFromDB_FB(Rmoz)
+
+     * מחיקת פריט כולל התמונה מבסיס הנתונים
+     * @param myrmoz הפריט שמוחקים
+     
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.AdapterRmoz::deleteFile(String)
+
+     * מחיקת קובץ האיחסון הענן
+     * @param fileURL כתובת הקובץ המיועד למחיקה
+     
+end note
+
+class aka.hanan.hananakawiapp.data.Tables.MyUser {
++ long keyid
++ String name
++ boolean cliant
++ boolean princepal
++ String email
++ String pass
+~ String image
+~ String phone
++ boolean isPrincepal()
++ void setPrincepal(boolean)
++ boolean isCliant()
++ void setCliant(boolean)
++ String getImage()
++ String getPhone()
++ void setPhone(String)
++ void setImage(String)
++ String getName()
++ void setName(String)
++ long getKeyid()
++ void setKeyid(long)
++ String getEmail()
++ void setEmail(String)
++ String getPass()
++ void setPass(String)
+}
+note left of aka.hanan.hananakawiapp.data.Tables.MyUser::cliant
+هل الشخص مستخدم عادي
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.MyUser::princepal
+هل المستخدم مدير
+end note
+note left of aka.hanan.hananakawiapp.data.Tables.MyUser::email
+البريد الالكتروني الشخصي للشخص
+end note
+note right of aka.hanan.hananakawiapp.data.Tables.MyUser::pass
+كلمة السر
+end note
+
+
+
+
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.SignUp
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.translateactivity
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.SignIn
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.learninggame
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.learn
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.MainActivity
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.SplashScreen
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.AddRmoz1
+androidx.appcompat.app.AppCompatActivity <|-- aka.hanan.hananakawiapp.learnactivity
+android.widget.ArrayAdapter <|-- aka.hanan.hananakawiapp.data.Tables.AdapterRmoz
+@enduml

@@ -336,6 +336,7 @@ public class SignUp extends AppCompatActivity {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             //חישוב מה הגודל שהועלה
+
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
                             progressDialog.setMessage("Uploaded " + (int) progress + "%");

@@ -37,13 +37,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".learn"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".AddRmoz1"
             android:exported="false">
             <meta-data

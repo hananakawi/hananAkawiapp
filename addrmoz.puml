@@ -1,0 +1,66 @@
+@startuml
+class AddRmoz1 {
+- Button btnSave
+- Button btnCancel
+- EditText etText
+- ImageView imageRmoz
+- int IMAGE_PICK_CODE
+- int PERMISSION_CODE
+- Button btnUpload
+- Uri toUploadimageUri
+- Uri downladuri
+- Rmoz r
+- ActivityResultLauncher<String> requestPermissionLauncher
+# void onCreate(Bundle)
+- void checkRmz_FB()
+- void savermoz_FB(Rmoz)
+- void pickImageFromGallery()
+# void onActivityResult(int,int,Intent)
+- void checkImagePermission()
++ void onRequestPermissionsResult(int,String[],int[])
+- void uploadImage(Uri)
+}
+note left of AddRmoz1::IMAGE_PICK_CODE
+ קוד מזהה לבקשת בחירת תמונה
+end note
+note right of AddRmoz1::PERMISSION_CODE
+קוד מזהה לבחירת הרשאת גישה לקבצים
+end note
+note left of AddRmoz1::btnUpload
+ לחצן לביצוע העלאת התמונה
+end note
+note right of AddRmoz1::toUploadimageUri
+ כתוב הקובץ(תמונה) שרוצים להעלות
+end note
+note left of AddRmoz1::downladuri
+כתובת הקוץ בענן אחרי ההעלאה
+end note
+
+note left of AddRmoz1::checkRmz_FB()
+FireBase دالةت تفحص اذا معطيات التسجيل صحيحة
+end note
+note right of AddRmoz1::onActivityResult(int,int,Intent)
+
+     * @param requestCode מספר הקשה
+     * @param resultCode  תוצאה הבקשה (אם נבחר משהו או בוטלה)
+     * @param data        הנתונים שנבחרו
+     
+end note
+note left of AddRmoz1::checkImagePermission()
+
+     * בדיקה האם יש הרשאה לגישה לקבצים בטלפון
+     
+end note
+note right of AddRmoz1::onRequestPermissionsResult(int,String[],int[])
+
+     * @param requestCode  The request code passed in מספר בקשת ההרשאה
+     * @param permissions  The requested permissions. Never null. רשימת ההרשאות לאישור
+     * @param grantResults The grant results for the corresponding permissions תוצאה עבור כל הרשאה
+     *                     PERMISSION_GRANTED אושר or PERMISSION_DENIED נדחה . Never null.
+     
+end note
+
+
+
+AppCompatActivity <|-- AddRmoz1
+@enduml

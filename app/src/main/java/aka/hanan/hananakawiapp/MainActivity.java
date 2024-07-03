@@ -46,6 +46,14 @@ public class MainActivity extends AppCompatActivity {
         lstrmoz.setAdapter(romozAdapter);//קישור המתאם אם המציג הגרפי לאוסף
         spnrmeassages=findViewById(R.id.spnrmeassages);
         fabAdd = findViewById(R.id.fabAdd);
+        if(FirebaseAuth.getInstance().getCurrentUser()!= null)//هل تم التسجيل من قبل
+        {
+            if (FirebaseAuth.getInstance().getCurrentUser().getEmail().equals("hh@hh.hh")==false) {
+                Intent i = new Intent(this, learnactivity.class);
+                startActivity(i);
+                finish();
+            }
+        }
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        readTaskFrom_FB();
+        readRMZFrom_FB();
     }
 
     @Override//بناء قائمة
@@ -71,8 +79,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override//معالجة حدث اختيار عنصر من القائمة
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.itmSetting) {
-            Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.itmLearn) {
+            Toast.makeText(this, "learn", Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(this, learnactivity.class);
+            startActivity(i);
         }
         if ((item.getItemId() == R.id.itmLogOut)) {
             showYesNoDialog();
@@ -115,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
         popup.show();//فتح وعرض القائمة
     }
 
+    /**
+     *بناء ديالوج
+     */
     public void showYesNoDialog() {
         //تجهيز بناء شباك حوار"ديالوغ" يتلقى بارمتر مؤشر للنشاط (الاكتيفيتي)الحالي
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -146,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
      *  קריאת נתונים ממסד הנתונים firestore
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
      */
-    public void readTaskFrom_FB()
+    public void readRMZFrom_FB()
     {
         //בניית רשימה ריקה
         ArrayList<Rmoz> arrayList =new ArrayList<>();
