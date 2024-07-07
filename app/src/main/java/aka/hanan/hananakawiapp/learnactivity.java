@@ -3,13 +3,17 @@ package aka.hanan.hananakawiapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,14 +35,15 @@ public class learnactivity extends AppCompatActivity {
     private TextInputEditText tivText;
     private ListView listView;
     private ImageButton btnTrans;
-    AdapterRmoz romozAdapter ;
+    AdapterRmoz romozAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learnactivity);
-        listView=findViewById(R.id.listView);
-      //  btnTrans=findViewById(R.id.btnTrans)
-        tivText=findViewById(R.id.tivText);
+        listView = findViewById(R.id.listView);
+        //  btnTrans=findViewById(R.id.btnTrans)
+        tivText = findViewById(R.id.tivText);
         romozAdapter = new AdapterRmoz(this, R.layout.text_item_layout);//בניית המתאם
         listView.setAdapter(romozAdapter);
         tivText.addTextChangedListener(new TextWatcher() {
@@ -49,7 +54,7 @@ public class learnactivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                readRMZFrom_FB(charSequence.toString());
+                readRMZFrom_FB(charSequence.toString());//سلسلة الكلمة
             }
 
             @Override
@@ -58,15 +63,16 @@ public class learnactivity extends AppCompatActivity {
             }
         });
     }
+
     /**
-     *  קריאת נתונים ממסד הנתונים firestore
+     * קריאת נתונים ממסד הנתונים firestore
+     *
      * @return .... רשימת הנתונים שנקראה ממסד הנתונים
      */
-    public void readRMZFrom_FB(String s)
-    {
+    public void readRMZFrom_FB(String s) {
         //בניית רשימה ריקה
-        ArrayList<Rmoz> arrayList =new ArrayList<>();
-        HashMap<String,Rmoz> word=new HashMap<>();
+        ArrayList<Rmoz> arrayList = new ArrayList<>();
+        HashMap<String, Rmoz> word = new HashMap<>();
         //קבלת הפנייה למסד הנתונים
         FirebaseFirestore ffRef = FirebaseFirestore.getInstance();
         //קישור לקבוצה collection שרוצים לקרוא
@@ -79,15 +85,15 @@ public class learnactivity extends AppCompatActivity {
              */
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
+                if (task.isSuccessful()) {// אם בקשת הנתונים התקבלה בהצלחה
                     //מעבר על כל ה״מסמכים״= עצמים והוספתם למבנה הנתונים
                     for (DocumentSnapshot document : task.getResult().getDocuments()) {
                         //המרת העצם לטיפוס שלו// הוספת העצם למבנה הנתונים
                         Rmoz rmz = document.toObject(Rmoz.class);
 
-                        word.put(rmz.getText(),rmz);
+                        word.put(rmz.getText(), rmz);
                     }
-                    for (int i = 0; i <s.length() ; i++) {
+                    for (int i = 0; i < s.length(); i++) {
                         Rmoz rmoz = word.get(s.charAt(i) + "");
                         arrayList.add(rmoz);
                     }
@@ -95,10 +101,29 @@ public class learnactivity extends AppCompatActivity {
                     romozAdapter.clear();//ניקוי המתאם מכל הנתונים
                     romozAdapter.addAll(arrayList);
                     // messageAdapter.addAll(arrayList);//הוספת כל הנתונים למתאם
-                }
-                else{
+                } else {
                 }
             }
         });
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.popup_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+if (item.getItemId() == R.id.itmrumoz)
+{
+    Toast.makeText(learnactivity.this, "Add", Toast.LENGTH_SHORT).show();
+    Intent i = new Intent(learnactivity.this, AddRmoz1.class);
+    startActivity(i);
+
 }
+return true;
+    }
+
+
+    }

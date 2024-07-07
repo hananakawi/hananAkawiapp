@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if ((item.getItemId() == R.id.itmLogOut)) {
             showYesNoDialog();
+            Toast.makeText(MainActivity.this, "LOG OUT", Toast.LENGTH_SHORT).show();
+            FirebaseAuth.getInstance().signOut();
+            finish();
         }
         if (item.getItemId() == R.id.itmAddRmoz) {
             Toast.makeText(MainActivity.this, "Add", Toast.LENGTH_SHORT).show();
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                if (item.getItemId() == R.id.itmEdit) {
+                if (item.getItemId() == R.id.itmrumoz) {
                     Toast.makeText(MainActivity.this, "Edit", Toast.LENGTH_SHORT).show();
                 }
                 if (item.getItemId() == R.id.itmDelete) {

@@ -151,7 +151,7 @@ public class AddRmoz1 extends AppCompatActivity {
 
 
 
-
+//نختار الصور من الالبوم الي  بالتلفون
     private void pickImageFromGallery() {
         //implicit intent (מרומז) to pick image
         Intent intent = new Intent(Intent.ACTION_PICK);
